@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consolidado</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/consolidado.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="consolidado-container">
+        <h2>REGISTRO DE CONSOLIDADO</h2>
+        <form id="registroForm">
+            <div class="form-row">
+                <label for="tienda">TIENDA:</label>
+                <select id="tienda" name="tienda">
+                    <option value="TPF TC AYACASAMBLEA2">TPF TC AYACASAMBLEA2</option>
+                    <option value="TPF AYACUCHO1">TPF AYACUCHO1</option>
+                    <option value="TPF HUANCAVELICA">TPF HUANCAVELICA</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <label for="imei">IMEI:</label>
+                <input type="text" id="imei" name="imei" required>
+            </div>
+            <div class="form-row">
+                <label for="imsi">IMSI:</label>
+                <input type="text" id="imsi" name="imsi">
+            </div>
+            <div class="form-row">
+                <label for="numero">NÚMERO:</label>
+                <input type="text" id="numero" name="numero">
+            </div>
+            <div class="form-row">
+                <label for="dni">DNI:</label>
+                <input type="text" id="dni" name="dni">
+            </div>
+            <div class="form-row">
+                <label for="cliente">CLIENTE:</label>
+                <input type="text" id="cliente" name="cliente" required>
+            </div>
+            <div class="form-row">
+                <label for="codigo_dibden">CÓDIGO SIBDEN:</label>
+                <input type="text" id="codigo_dibden" name="codigo_dibden">
+            </div>
+            <div class="form-row">
+                <label for="ss_sibel">SS SIBEL:</label>
+                <input type="text" id="ss_sibel" name="ss_sibel">
+            </div>
+            <div class="form-row">
+                <label for="fecha_solicitud">FECHA DE SOLICITUD:</label>
+                <input type="date" id="fecha_solicitud" name="fecha_solicitud">
+            </div>
+            <div class="buttons">
+                <button type="button" id="btnRegistrar">REGISTRAR</button>
+                </div>
+        </form>
+
+        <h3>Registros</h3>
+        <div id="registros-container">
+            <table id="registros-table">
+                <thead>
+                    <tr>
+                        <th>TIENDA</th>
+                        <th>IMEI</th>
+                        <th>IMSI</th>
+                        <th>NÚMERO</th>
+                        <th>DNI</th>
+                        <th>CLIENTE</th>
+                        <th>CÓDIGO SIBDEN</th>
+                        <th>SS SIBEL</th>
+                        <th>FECHA DE SOLICITUD</th>
+                        <th>ACCIONES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+
+        <div class="export-button">
+            <button type="button" id="btnExportarExcel">Exportar a Excel</button>
+        </div>
+    </div>
+
+    <script src="../js/consolidado.js"></script>
+</body>
+</html>

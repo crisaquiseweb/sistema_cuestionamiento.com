@@ -1,0 +1,177 @@
+/* Estilos específicos para la página de consolidado */
+.consolidado-container {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.consolidado-container h2 {
+    color: #007bff;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.consolidado-container form {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-row label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-row input[type="text"],
+.form-row input[type="date"],
+.form-row select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.form-row input[type="text"]:focus,
+.form-row input[type="date"]:focus,
+.form-row select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+.consolidado-container .buttons {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.consolidado-container .buttons button {
+    padding: 12px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.consolidado-container .buttons button#btnRegistrar {
+    background-color: #28a745;
+    color: white;
+}
+
+.consolidado-container .buttons button#btnRegistrar:hover {
+    background-color: #1e7e34;
+}
+
+.consolidado-container .buttons button#btnEliminar {
+    background-color: #dc3545;
+    color: white;
+}
+
+.consolidado-container .buttons button#btnEliminar:hover {
+    background-color: #c82333;
+}
+
+.consolidado-container .buttons button#btnModificar {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.consolidado-container .buttons button#btnModificar:hover {
+    background-color: #e0a800;
+}
+
+.consolidado-container h3 {
+    margin-top: 30px;
+    color: #333;
+}
+
+#registros-container {
+    overflow-x: auto;
+}
+
+#registros-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+}
+
+#registros-table th, #registros-table td {
+    padding: 10px;
+    border: 1px solid #eee;
+    text-align: left;
+}
+
+#registros-table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+#registros-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.export-button {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.export-button button#btnExportarExcel {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #198754;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.export-button button#btnExportarExcel:hover {
+    background-color: #14533d;
+}
+
+.acciones-columna {
+    text-align: center; /* Centrar los iconos */
+}
+
+.acciones-columna button {
+    /* Eliminamos los estilos de los botones de texto */
+}
+
+.acciones-columna i { /* Estilos para los iconos de Font Awesome */
+    font-size: 18px;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.acciones-columna i.fa-trash-alt {
+    color: #dc3545;
+}
+
+.acciones-columna i.fa-trash-alt:hover {
+    color: #c82333;
+}
+
+.acciones-columna i.fa-edit {
+    color: #ffc107;
+}
+
+.acciones-columna i.fa-edit:hover {
+    color: #e0a800;
+}

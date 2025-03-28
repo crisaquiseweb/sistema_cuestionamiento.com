@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de PDF</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/generador_pdf.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.4.0/pdf-lib.min.js"></script>
+</head>
+<body>
+    <div class="pdf-generator-container">
+        <h2>Generador de Reporte de IMEI</h2>
+        <div class="form-row">
+            <label for="nombre_cliente">Nombre del Cliente:</label>
+            <input type="text" id="nombre_cliente" name="nombre_cliente" required>
+        </div>
+
+        <h3>Subir Archivos (en el orden especificado):</h3>
+        <div class="upload-section">
+            <label for="osiptel_capture">1. Captura de página de Osiptel:</label>
+            <input type="file" id="osiptel_capture" accept=".pdf, .png, .jpg, .jpeg">
+        </div>
+        <div class="upload-section">
+            <label for="transferencia_osiptel">2. Captura de transferencia a Osiptel:</label>
+            <input type="file" id="transferencia_osiptel" accept=".pdf, .png, .jpg, .jpeg">
+        </div>
+        <div class="upload-section">
+            <label for="foto_imei_fisico">3. Foto IMEI físico:</label>
+            <input type="file" id="foto_imei_fisico" accept=".png, .jpg, .jpeg">
+        </div>
+        <div class="upload-section">
+            <label for="foto_imei_logico">4. Foto IMEI lógico:</label>
+            <input type="file" id="foto_imei_logico" accept=".png, .jpg, .jpeg">
+        </div>
+        <div class="upload-section">
+            <label for="solicitud_abonado">5. Solicitud de cuestionamiento presentado por el abonado:</label>
+            <input type="file" id="solicitud_abonado" accept=".pdf, .png, .jpg, .jpeg">
+        </div>
+        <div class="upload-section">
+            <label for="validacion_identidad">6. Validación de identidad:</label>
+            <input type="file" id="validacion_identidad" accept=".pdf, .png, .jpg, .jpeg">
+        </div>
+        <div class="upload-section">
+            <label for="captura_gsma">7. Captura GSMA:</label>
+            <input type="file" id="captura_gsma" accept=".pdf, .png, .jpg, .jpeg">
+        </div>
+
+        <button type="button" id="exportar_pdf">Exportar PDF</button>
+        <div id="mensaje_exportacion"></div>
+    </div>
+
+    <script src="../js/generador_pdf.js"></script>
+</body>
+</html>
