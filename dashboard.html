@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Inicio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="icon/casa.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="pages/cuestionamiento.html" target="content-frame">CUESTIONAMIENTO</a></li>
+                <li><a href="pages/consolidado.html" target="content-frame">CONSOLIDADO</a></li>
+                <li><a href="pages/generador_pdf.html" target="content-frame">GENERADOR PDF</a></li>
+                <li><a href="pages/usuarios_conectados.html" target="content-frame">USUARIOS CONECTADOS</a></li>
+            </ul>
+        </nav>
+        <div class="user-info">
+            <img id="user-avatar" src="" alt="Avatar">
+            <span id="username-display"></span>
+            <button id="logout-button">Cerrar Sesión</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="dashboard-info">
+            <h2 style="font-family: cursive; color: #fff; font-size: 40px;">ESTAS EN TU PANEL DE CONTROL</h2>
+            <p style="font-family: cursive; color: #f38c08;font-size: 30px;">BIENVENIDO, <span id="welcome-username"></span>!</p>
+            <div class="real-time" style="font-family: cursive; color: #fff;font-size: 25px;">
+                <span id="current-time"></span>
+                <span id="current-date"></span>
+            </div>
+        </div>
+        <iframe name="content-frame" id="content-frame" src="" frameborder="0" style="height: 1500px;"></iframe>
+    </main>
+
+    <footer>
+        <p>&copy;2025. Todos los derechos reservados.°Crismer Aquise</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const usernameDisplay = document.getElementById('username-display');
+            const welcomeUsername = document.getElementById('welcome-username');
+            const currentTimeDisplay = document.getElementById('current-time');
+            const currentDateDisplay = document.getElementById('current-date');
+            const logoutButton = document.getElementById('logout-button');
+            const userAvatar = document.getElementById('user-avatar');
+
+            const loggedInUsername = localStorage.getItem('username');
+
+            if (loggedInUsername) {
+                usernameDisplay.textContent = loggedInUsername;
+                welcomeUsername.textContent = loggedInUsername;
+                // Generar avatar aleatorio basado en el nombre (ejemplo muy básico)
+                const avatarSeed = loggedInUsername.charCodeAt(0) % 5; // Ejemplo con los primeros 5 avatars
+                userAvatar.src = `https://api.dicebear.com/7.x/bottts-neutral/svg?seed=${loggedInUsername}&size=64`;
+            } else {
+                window.location.href = 'index.html'; // Redirigir si no hay usuario logueado
+            }
+
+            function updateClock() {
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const seconds = now.getSeconds().toString().padStart(2, '0');
+                currentTimeDisplay.textContent = `${hours}:${minutes}:${seconds}`;
+            }
+
+            function updateDate() {
+                const now = new Date();
+                const day = now.getDate().toString().padStart(2, '0');
+                const month = (now.getMonth() + 1).toString().padStart(2, '0');
+                const year = now.getFullYear();
+                currentDateDisplay.textContent = `${day}/${month}/${year}`;
+            }
+
+            updateClock();
+            updateDate();
+            setInterval(updateClock, 1000); // Actualizar el reloj cada segundo
+
+            logoutButton.addEventListener('click', function() {
+                localStorage.removeItem('username');
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+</html>
