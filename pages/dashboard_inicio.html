@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio del Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .dashboard-container {
+            display: flex;
+            width: 100%;
+        }
+
+        .chat-sidebar {
+            background-color: #f8f8f8;
+            border-right: 1px solid #ddd;
+            padding: 20px;
+            width: 300px;
+            height:600px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-sidebar h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #007bff;
+        }
+
+        .user-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+
+        .user-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .user-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .user-list li:last-child {
+            border-bottom: none;
+        }
+
+        .chat-registration {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-registration input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .chat-registration button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .chat-registration button:hover {
+            background-color: #1e7e34;
+        }
+
+        .chat-panel {
+            flex-grow: 1;
+            display: none; /* Inicialmente oculto */
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .chat-messages p {
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input input[type="text"] {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .chat-input button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .chat-input button:hover {
+            background-color: #0056b3;
+        }
+
+        .dashboard-content {
+            flex-grow: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .user-actions {
+            /* display: none; Ocultar completamente la sección si no se usa */
+        }
+
+        .user-actions button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .user-actions button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .admin-config {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .admin-config h2 {
+            color: #ff9800;
+            margin-top: 0;
+        }
+
+        .admin-config button {
+            background-color: #ff9800;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .admin-config button:hover {
+            background-color: #e08200;
+            transform: scale(1.02);
+        }
+
+        .statistics {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            display: flex;
+            gap: 30px;
+            text-align: center;
+        }
+
+        .statistic-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .statistic-item h3 {
+            color: #28a745;
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+
+        .statistic-item .value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        /* Barra de progreso */
+        .progress-bar-container {
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            height: 25px;
+            width: 100%;
+            margin-top: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            background-color: #007bff;
+            height: 100%;
+            width: 0%;
+            border-radius: 5px;
+            transition: width 0.8s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        /* Animaciones */
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .statistic-item {
+            animation: countUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .statistic-item:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .statistic-item:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="chat-sidebar">
+            <h3>Chat Local</h3>
+            <div class="user-list">
+                <ul>
+                    </ul>
+            </div>
+            <div class="chat-registration" id="chat-registration">
+                <input type="text" id="register-username" placeholder="Nombre de usuario">
+                <button id="register-button">Registrarse/Iniciar Sesión</button>
+            </div>
+            <div class="chat-panel" id="chat-panel" style="display: none;">
+                <div class="chat-messages" id="chat-messages-list">
+                    </div>
+                <div class="chat-input">
+                    <input type="text" id="chat-input-message" placeholder="Escribe tu mensaje...">
+                    <button id="chat-send-button">Enviar</button>
+                </div>
+            </div>
+        </aside>
+        <main class="dashboard-content">
+            <section class="user-actions">
+                </section>
+
+            <section class="admin-config">
+                <h2>Configuración de Usuarios (Solo Admin)</h2>
+                <div id="admin-controls">
+                    <button>Gestionar Roles</button>
+                    <button>Ver Registros de Actividad</button>
+                    <button>Configuración del Sistema</button>
+                    <button id="reset-users-button">Reiniciar Usuarios Registrados</button>
+                </div>
+                <p id="not-admin" style="display: none; color: red;">No tienes permisos de administrador para ver esta sección.</p>
+            </section>
+
+            <section class="statistics">
+                <div class="statistic-item">
+                    <h3>Crecimiento de Registro</h3>
+                    <p class="value" id="registro-crecimiento" data-final="15">0%</p>
+                </div>
+                <div class="statistic-item">
+                    <h3>Registros del Mes</h3>
+                    <p class="value" id="registros-mes" data-final="125">0</p>
+                </div>
+                <div class="statistic-item">
+                    <h3>Registros Anuales</h3>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="registros-anuales-progress" data-final="1580">0</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulación de rol de administrador
+            const isAdmin = true;
+            const adminControls = document.getElementById('admin-controls');
+            const notAdminMessage = document.getElementById('not-admin');
+            const resetUsersButton = document.getElementById('reset-users-button');
+            const chatRegistrationDiv = document.getElementById('chat-registration');
+            const chatPanelDiv = document.getElementById('chat-panel');
+            const userListUl = document.querySelector('.user-list ul');
+            let loggedInUsername = localStorage.getItem('chatUsername');
+
+            if (isAdmin) {
+                adminControls.style.display = 'block';
+                notAdminMessage.style.display = 'none';
+            } else {
+                adminControls.style.display = 'none';
+                notAdminMessage.style.display = 'block';
+                // Ocultar el botón de reinicio de usuarios si no es admin
+                if (resetUsersButton) {
+                    resetUsersButton.style.display = 'none';
+                }
+            }
+
+            // Animación de las estadísticas de conteo
+            function animateValue(id, start, end, duration, suffix = '') {
+                const obj = document.getElementById(id);
+                const range = end - start;
+                const minTimer = 50;
+                let stepTime = Math.abs(Math.floor(duration / range));
+                stepTime = Math.max(stepTime, minTimer);
+                let startTime = null;
+
+                function step(timestamp) {
+                    if (!startTime) startTime = timestamp;
+                    const progress = Math.min((timestamp - startTime) / duration, 1);
+                    obj.textContent = Math.floor(progress * range) + suffix;
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                }
+                window.requestAnimationFrame(step);
+            }
+
+            const crecimientoRegistro = document.getElementById('registro-crecimiento');
+            const registrosMes = document.getElementById('registros-mes');
+
+            animateValue('registro-crecimiento', 0, parseInt(crecimientoRegistro.dataset.final), 1500, '%');
+            animateValue('registros-mes', 0, parseInt(registrosMes.dataset.final), 2000);
+
+            // Animación de la barra de progreso para registros anuales
+            const progressBarFill = document.getElementById('registros-anuales-progress');
+            const annualRegistrations = parseInt(progressBarFill.dataset.final);
+            const progressBarDuration = 2500;
+
+            function animateProgressBar(element, finalValue, duration) {
+                let startTime = null;
+                const total = 2000; // Simulación del total de registros anuales posibles
+                const targetWidth = (finalValue / total) * 100;
+
+                function step(timestamp) {
+                    if (!startTime) startTime = timestamp;
+                    const progress = Math.min((timestamp - startTime) / duration, 1);
+                    const currentWidth = progress * targetWidth;
+                    element.style.width = currentWidth + '%';
+                    element.textContent = Math.floor(currentWidth / 100 * total); // Mostrar el número en la barra
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                }
+                window.requestAnimationFrame(step);
+            }
+
+            animateProgressBar(progressBarFill, annualRegistrations, progressBarDuration);
+
+            // Funcionalidad del Chat Local
+            const registerButton = document.getElementById('register-button');
+            const chatMessagesList = document.getElementById('chat-messages-list');
+            const chatInputMessage = document.getElementById('chat-input-message');
+            const chatSendButton = document.getElementById('chat-send-button');
+            const resetChatButton = document.getElementById('reset-chat-button');
+
+            function updateOnlineUsers() {
+                userListUl.innerHTML = '';
+                if (loggedInUsername) {
+                    const li = document.createElement('li');
+                    li.textContent = loggedInUsername;
+                    userListUl.appendChild(li);
+                }
+                // Aquí podrías agregar lógica para mostrar otros usuarios conectados si tuvieras esa funcionalidad
+            }
+
+            updateOnlineUsers();
+
+            if (loggedInUsername) {
+                chatRegistrationDiv.style.display = 'none';
+                chatPanelDiv.style.display = 'flex';
+            }
+
+            registerButton.addEventListener('click', function() {
+                const username = document.getElementById('register-username').value.trim();
+                if (username) {
+                    loggedInUsername = username;
+                    localStorage.setItem('chatUsername', loggedInUsername);
+                    chatRegistrationDiv.style.display = 'none';
+                    chatPanelDiv.style.display = 'flex';
+                    updateOnlineUsers();
+                    addBotMessage(`Bienvenido, ${loggedInUsername}!`); // Mensaje automático al registrarse
+                } else {
+                    alert('Por favor, ingresa un nombre de usuario.');
+                }
+            });
+
+            chatSendButton.addEventListener('click', function() {
+                const message = chatInputMessage.value.trim();
+                if (message && loggedInUsername) {
+                    addUserMessage(loggedInUsername, message);
+                    chatInputMessage.value = '';
+                    // Simulación de respuesta automática
+                    setTimeout(function() {
+                        addBotMessage("Gracias por tu mensaje. ¡Estoy aquí para ayudarte!");
+                    }, 500);
+                } else if (!loggedInUsername) {
+                    alert('Por favor, regístrate o inicia sesión para chatear.');
+                }
+            });
+
+            if (resetChatButton) {
+                resetChatButton.addEventListener('click', function() {
+                    chatMessagesList.innerHTML = ''; // Limpiar todos los mensajes del chat
+                });
+            }
+
+            if (resetUsersButton) {
+                resetUsersButton.addEventListener('click', function() {
+                    console.log("¡Botón 'Reiniciar Usuarios Registrados' clickeado!"); // Para verificar si se hace clic
+                    localStorage.removeItem('chatUsername');
+                    loggedInUsername = null;
+                    updateOnlineUsers();
+                    chatPanelDiv.style.display = 'none';
+                    chatRegistrationDiv.style.display = 'flex';
+                    alert('Los usuarios registrados en el chat local han sido reiniciados.');
+                    window.location.reload(); // Forzar la recarga para asegurar que el estado se restablezca
+                });
+            }
+
+            function addUserMessage(username, message) {
+                const messageDiv = document.createElement('p');
+                messageDiv.textContent = `${username}: ${message}`;
+                chatMessagesList.appendChild(messageDiv);
+                chatMessagesList.scrollTop = chatMessagesList.scrollHeight;
+            }
+
+            function addBotMessage(message) {
+                const messageDiv = document.createElement('p');
+                messageDiv.textContent = `Bot: ${message}`;
+                chatMessagesList.appendChild(messageDiv);
+                chatMessagesList.scrollTop = chatMessagesList.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>

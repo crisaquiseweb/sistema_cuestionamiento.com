@@ -2,7 +2,7 @@ body {
     font-family: sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: transparent;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -10,18 +10,21 @@ body {
 
 /* Estilos para la página de login */
 .login-container {
-    background-color: #fff;
+    background-color: #001229;
     padding: 30px;
-    border-radius: 8px;
+    border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 350px;
     margin: 50px auto;
+    border: 15px;
     text-align: center;
+    font-family: system-ui;
 }
 
 .login-container h1 {
     margin-bottom: 20px;
-    color: #333;
+    color: #fff;
+    font-family: system-ui;
 }
 
 .form-group {
@@ -32,31 +35,46 @@ body {
 .form-group label {
     display: block;
     margin-bottom: 5px;
-    color: #555;
+    color: #fff;
+    font-size: 20px;
+    justify-content: center;
+  font-family: system-ui;
 }
 
 .form-group input[type="text"],
 .form-group input[type="password"] {
     width: calc(100% - 12px);
     padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    background-color: transparent;
+    border: 2px solid #fff;
+    color: white;
+    border-radius: 8px;
     box-sizing: border-box;
 }
 
 .login-container button {
-    background-color: #007bff;
-    color: white;
+    background-color: #123152;
+    color: #fff;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     width: 100%;
+    font-size: 20px;
     margin-top: 10px;
+    ransform: rotateY(360deg)
 }
 
 .login-container button:hover {
-    background-color: #0056b3;
+    transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0,255,255,0.5);
+
+  .login-container:hover::before {
+  opacity: 2;
+  transform: rotate(-45deg) translateY(100%);
+}
+
+
 }
 
 .login-container p {
@@ -65,12 +83,13 @@ body {
 }
 
 .login-container a {
-    color: #007bff;
+    color: #fff;
     text-decoration: none;
 }
 
 .login-container a:hover {
-    text-decoration: underline;
+    color: #cf5308;
+    text-decoration: none;
 }
 
 header {
@@ -202,8 +221,8 @@ footer {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
+    background-color: transparent;
+    border: 1px solid transparent;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     width: 300px;
@@ -212,11 +231,12 @@ footer {
 }
 
 .chat-header {
-    background-color: #007bff;
+    background-color:#32833b;
     color: white;
     padding: 10px;
     text-align: center;
     border-radius: 5px 5px 0 0;
+    font-size: 20px;
     cursor: pointer;
 }
 
@@ -225,14 +245,16 @@ footer {
     height: 200px;
     overflow-y: auto;
     display: flex;
+    color: #fff;
+    background-color: transparent;
     flex-direction: column;
 }
 
 .chat-body .bot-message {
-    background-color: #f0f0f0;
-    color: #333;
+    background-color: #32833b;
+    color: #fff;
     padding: 8px;
-    border-radius: 5px;
+    border-radius: 20px;
     margin-bottom: 5px;
     align-self: flex-start;
 }
@@ -240,20 +262,23 @@ footer {
 .chat-input {
     display: flex;
     padding: 10px;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #32833b;
 }
 
 .chat-input input[type="text"] {
     flex-grow: 1;
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #001A38;
+    background-color: transparent;
+    color: white;
     border-radius: 3px;
     margin-right: 5px;
 }
 
 .chat-input button {
-    background-color: #007bff;
+    background-color: #001A38;
     color: white;
+    font-size: 20px;
     border: none;
     padding: 8px 10px;
     border-radius: 3px;

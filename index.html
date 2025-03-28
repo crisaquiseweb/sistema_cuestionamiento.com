@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="icon/cerrar.ico" type="image/x-icon">
 </head>
-<body>
+<body style="background-image: url(https://img.freepik.com/vector-gratis/fondo-hexagonal-degradado_23-2148944164.jpg?t=st=1743178868~exp=1743182468~hmac=6dee7a86ad8d5240681219da568193dc898f7e257d1b303fa099f2f6d6354b1f&w=2000);">
 
 
-    <div class="login-container">
+    <div class="login-container" style="margin-top: 250px;">
         <h1>Iniciar Sesión</h1>
         <div class="form-group">
             <label for="username">Nombre </label>
@@ -21,7 +21,7 @@
             <input type="password" id="password" name="password" readonly placeholder="Aleatorio">
         </div>
         <div class="form-group">
-            <button type="button" id="generate-password">Generar Contraseña</button>
+            <button type="button" id="generate-password" >Generar Contraseña</button>
         </div>
         <button id="login-button" type="button">Iniciar Sesion</button>
         <p><a href="#">Contactar al soporte</a></p>
@@ -38,31 +38,6 @@
         </div>
     </div>
 
-
     <script src="js/script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const generatePasswordButton = document.getElementById('generate-password');
-            const passwordInput = document.getElementById('password');
-            const loginButton = document.getElementById('login-button');
-            const usernameInput = document.getElementById('username');
-
-            generatePasswordButton.addEventListener('click', function() {
-                const randomPassword = Math.random().toString(36).slice(-8);
-                passwordInput.value = randomPassword;
-            });
-
-            loginButton.addEventListener('click', function() {
-                const username = usernameInput.value.trim();
-                if (username) {
-                    localStorage.setItem('username', username);
-                    alert(`¡Bienvenido, ${username}!`);
-                    window.location.href = 'dashboard.html';
-                } else {
-                    alert('Por favor, Ingresa tu nombre de usuario.');
-                }
-            });
-        });
-    </script>
 </body>
 </html>
