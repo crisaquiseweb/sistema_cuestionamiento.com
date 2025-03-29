@@ -7,23 +7,24 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="icon/cerrar.ico" type="image/x-icon">
     <style>
-        body {
-            font-family: sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4; /* Fallback background color */
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            background-size: cover; /* Asegura que la imagen cubra todo el fondo */
-            background-position: center; /* Centra la imagen de fondo */
-            transition: background-image 0.5s ease-in-out; /* Opcional: Transición suave al cambiar la imagen */
-        }
-    </style>
-    <script src="js/script.js"></script> <!- - Enlace a tu archivo JavaScript - ->
-</head>
+    body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4; /* Fallback background color */
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+        background-position: center; /* Centra la imagen de fondo */
+        transition: background-image 0.5s ease-in-out; /* Opcional: Transición suave al cambiar la imagen */
+        align-items: center; /* Centra los contenedores horizontalmente */
+        justify-content: center; /* Centra los contenedores verticalmente */
+    }
+</style>
+    <script src="js/script.js"></script> </head>
 <body>
-    <div class="login-container" style="margin-top: 250px;">
+    <div class="login-container">
         <h1>Iniciar Sesión</h1>
         <div class="form-group">
             <label for="username">Nombre </label>
@@ -38,10 +39,11 @@
         </div>
         <button id="login-button">Iniciar Sesion</button>
         <p><a href="#">Contactar al soporte</a></p>
+        <p><a href="#">Necesitas ayuda?</a></p>
     </div>
 
     <div class="chat-box">
-        <div class="chat-header">Crismer te ayuda...</div>
+        <div class="chat-header">Cris te ayuda...</div>
         <div class="chat-body" id="chat-messages">
             <p class="bot-message">Bienvenido! ¿Para Ingresar al Sistema Primero Deberas Ingresar tu Nombre de Usuario Ejemplo:(PABLO), Luego le das Generar Contraseña, y Iniciar Sesion Te Recomiendo ingresar tu Nombre en Mayusculas? si tienes otra consulta Escribeme...</p>
         </div>
