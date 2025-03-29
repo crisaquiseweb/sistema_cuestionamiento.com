@@ -19,6 +19,53 @@
             width: 100%;
         }
 
+        #login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            width: 100%;
+        }
+
+        #login-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        #login-form h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        #login-form input[type="text"],
+        #login-form input[type="password"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            width: calc(100% - 22px);
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #login-form button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1em;
+        }
+
+        #login-form button:hover {
+            background-color: #0056b3;
+        }
+
         .chat-sidebar {
             background-color: #f8f8f8;
             border-right: 1px solid #ddd;
@@ -167,6 +214,7 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             margin-top: 30px;
             text-align: center;
+            display: none; /* Inicialmente oculto */
         }
 
         .admin-config h2 {
@@ -265,7 +313,16 @@
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
+    <div id="login-container">
+        <div id="login-form">
+            <h2>Iniciar Sesión</h2>
+            <input type="text" id="username" placeholder="Nombre de usuario">
+            <input type="password" id="password" placeholder="Contraseña (opcional)">
+            <button id="login-button">Iniciar Sesión</button>
+            </div>
+    </div>
+
+    <div class="dashboard-container" id="dashboard-content" style="display: none;">
         <aside class="chat-sidebar">
             <h3>Chat Local</h3>
             <div class="user-list">
@@ -274,7 +331,7 @@
             </div>
             <div class="chat-registration" id="chat-registration">
                 <input type="text" id="register-username" placeholder="Nombre de usuario">
-                <button id="register-button">Registrarse/Iniciar Sesión</button>
+                <button id="register-button-chat">Registrarse/Iniciar Sesión</button>
             </div>
             <div class="chat-panel" id="chat-panel" style="display: none;">
                 <div class="chat-messages" id="chat-messages-list">
@@ -289,13 +346,13 @@
             <section class="user-actions">
                 </section>
 
-            <section class="admin-config">
+            <section class="admin-config" id="admin-config-section">
                 <h2>Configuración de Usuarios (Solo Admin)</h2>
                 <div id="admin-controls">
                     <button>Gestionar Roles</button>
                     <button>Ver Registros de Actividad</button>
                     <button>Configuración del Sistema</button>
-                    <button id="reset-users-button">Reiniciar Usuarios Registrados</button>
+                    <button id="reset-users-button">Reiniciar Usuarios</button>
                 </div>
                 <p id="not-admin" style="display: none; color: red;">No tienes permisos de administrador para ver esta sección.</p>
             </section>
@@ -321,26 +378,89 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Simulación de rol de administrador
-            const isAdmin = true;
+            const loginContainer = document.getElementById('login-container');
+            const dashboardContent = document.getElementById('dashboard-content');
+            const usernameInput = document.getElementById('username');
+            const loginButton = document.getElementById('login-button');
+            const generatePasswordButton = document.getElementById('generate-password'); // Asegúrate de que este elemento exista si lo vas a usar
+
+            const adminConfigSection = document.getElementById('admin-config-section');
             const adminControls = document.getElementById('admin-controls');
             const notAdminMessage = document.getElementById('not-admin');
             const resetUsersButton = document.getElementById('reset-users-button');
-            const chatRegistrationDiv = document.getElementById('chat-registration');
-            const chatPanelDiv = document.getElementById('chat-panel');
-            const userListUl = document.querySelector('.user-list ul');
-            let loggedInUsername = localStorage.getItem('chatUsername');
 
-            if (isAdmin) {
-                adminControls.style.display = 'block';
-                notAdminMessage.style.display = 'none';
-            } else {
-                adminControls.style.display = 'none';
-                notAdminMessage.style.display = 'block';
-                // Ocultar el botón de reinicio de usuarios si no es admin
-                if (resetUsersButton) {
-                    resetUsersButton.style.display = 'none';
+            const connectionLogKey = 'userConnectionLog';
+
+            function logConnection(username) {
+                const log = JSON.parse(localStorage.getItem(connectionLogKey) || '[]');
+                const timestamp = new Date().toISOString();
+                log.push({ username: username, loginTime: timestamp });
+                localStorage.setItem(connectionLogKey, JSON.stringify(log));
+            }
+
+            if (generatePasswordButton) {
+                generatePasswordButton.addEventListener('click', function() {
+                    const randomPassword = Math.random().toString(36).slice(-8);
+                    const passwordInput = document.getElementById('password'); // Asegúrate de que el ID coincida
+                    if (passwordInput) {
+                        passwordInput.value = randomPassword;
+                    }
+                });
+            }
+
+            // Verificar si ya hay un usuario logueado al cargar la página
+            const loggedInUsername = localStorage.getItem('username');
+            if (loggedInUsername) {
+                if (loginContainer) loginContainer.style.display = 'none';
+                if (dashboardContent) dashboardContent.style.display = 'flex';
+                // **Verificación del administrador al cargar la página**
+                const adminUsername = '74566794';
+                if (loggedInUsername === adminUsername) {
+                    if (adminConfigSection) adminConfigSection.style.display = 'block';
+                    if (adminControls) adminControls.style.display = 'block';
+                    if (notAdminMessage) notAdminMessage.style.display = 'none';
+                    if (resetUsersButton) resetUsersButton.style.display = 'block';
+                } else {
+                    if (adminConfigSection) adminConfigSection.style.display = 'none';
+                    if (adminControls) adminControls.style.display = 'none';
+                    if (notAdminMessage) notAdminMessage.style.display = 'none';
+                    if (resetUsersButton) resetUsersButton.style.display = 'none';
                 }
+            } else {
+                // Si no hay usuario logueado, mostrar el formulario de inicio de sesión
+                if (loginContainer) loginContainer.style.display = 'flex';
+                if (dashboardContent) dashboardContent.style.display = 'none';
+                if (adminConfigSection) adminConfigSection.style.display = 'none'; // Asegurarse de que la sección de admin esté oculta inicialmente
+            }
+
+            if (loginButton) {
+                loginButton.addEventListener('click', function() {
+                    const username = usernameInput.value.trim();
+                    const passwordInput = document.getElementById('password'); // Puedes usar la contraseña para una autenticación más robusta
+                    const password = passwordInput ? passwordInput.value : '';
+
+                    if (username) {
+                        localStorage.setItem('username', username);
+                        logConnection(username); // Log the connection
+                        if (loginContainer) loginContainer.style.display = 'none';
+                        if (dashboardContent) dashboardContent.style.display = 'flex';
+                        // **Verificación del administrador después del inicio de sesión**
+                        const adminUsername = '74566794';
+                        if (username === adminUsername) {
+                            if (adminConfigSection) adminConfigSection.style.display = 'block';
+                            if (adminControls) adminControls.style.display = 'block';
+                            if (notAdminMessage) notAdminMessage.style.display = 'none';
+                            if (resetUsersButton) resetUsersButton.style.display = 'block';
+                        } else {
+                            if (adminConfigSection) adminConfigSection.style.display = 'none';
+                            if (adminControls) adminControls.style.display = 'none';
+                            if (notAdminMessage) notAdminMessage.style.display = 'none';
+                            if (resetUsersButton) resetUsersButton.style.display = 'none';
+                        }
+                    } else {
+                        alert('Por favor, ingresa tu nombre de usuario.');
+                    }
+                });
             }
 
             // Animación de las estadísticas de conteo
@@ -395,17 +515,19 @@
             animateProgressBar(progressBarFill, annualRegistrations, progressBarDuration);
 
             // Funcionalidad del Chat Local
-            const registerButton = document.getElementById('register-button');
+            const registerButtonChat = document.getElementById('register-button-chat');
             const chatMessagesList = document.getElementById('chat-messages-list');
             const chatInputMessage = document.getElementById('chat-input-message');
             const chatSendButton = document.getElementById('chat-send-button');
             const resetChatButton = document.getElementById('reset-chat-button');
+            const userListUl = document.querySelector('.user-list ul');
+            let loggedInChatUsername = localStorage.getItem('chatUsername');
 
             function updateOnlineUsers() {
                 userListUl.innerHTML = '';
-                if (loggedInUsername) {
+                if (loggedInChatUsername) {
                     const li = document.createElement('li');
-                    li.textContent = loggedInUsername;
+                    li.textContent = loggedInChatUsername;
                     userListUl.appendChild(li);
                 }
                 // Aquí podrías agregar lógica para mostrar otros usuarios conectados si tuvieras esa funcionalidad
@@ -413,38 +535,42 @@
 
             updateOnlineUsers();
 
-            if (loggedInUsername) {
-                chatRegistrationDiv.style.display = 'none';
-                chatPanelDiv.style.display = 'flex';
+            if (loggedInChatUsername) {
+                document.getElementById('chat-registration').style.display = 'none';
+                document.getElementById('chat-panel').style.display = 'flex';
             }
 
-            registerButton.addEventListener('click', function() {
-                const username = document.getElementById('register-username').value.trim();
-                if (username) {
-                    loggedInUsername = username;
-                    localStorage.setItem('chatUsername', loggedInUsername);
-                    chatRegistrationDiv.style.display = 'none';
-                    chatPanelDiv.style.display = 'flex';
-                    updateOnlineUsers();
-                    addBotMessage(`Bienvenido, ${loggedInUsername}!`); // Mensaje automático al registrarse
-                } else {
-                    alert('Por favor, ingresa un nombre de usuario.');
-                }
-            });
+            if (registerButtonChat) {
+                registerButtonChat.addEventListener('click', function() {
+                    const username = document.getElementById('register-username').value.trim();
+                    if (username) {
+                        loggedInChatUsername = username;
+                        localStorage.setItem('chatUsername', loggedInChatUsername);
+                        document.getElementById('chat-registration').style.display = 'none';
+                        document.getElementById('chat-panel').style.display = 'flex';
+                        updateOnlineUsers();
+                        addBotMessage(`Bienvenido, ${loggedInChatUsername}!`); // Mensaje automático al registrarse
+                    } else {
+                        alert('Por favor, ingresa un nombre de usuario para el chat.');
+                    }
+                });
+            }
 
-            chatSendButton.addEventListener('click', function() {
-                const message = chatInputMessage.value.trim();
-                if (message && loggedInUsername) {
-                    addUserMessage(loggedInUsername, message);
-                    chatInputMessage.value = '';
-                    // Simulación de respuesta automática
-                    setTimeout(function() {
-                        addBotMessage("Gracias por tu mensaje. ¡Estoy aquí para ayudarte!");
-                    }, 500);
-                } else if (!loggedInUsername) {
-                    alert('Por favor, regístrate o inicia sesión para chatear.');
-                }
-            });
+            if (chatSendButton) {
+                chatSendButton.addEventListener('click', function() {
+                    const message = chatInputMessage.value.trim();
+                    if (message && loggedInChatUsername) {
+                        addUserMessageChat(loggedInChatUsername, message);
+                        chatInputMessage.value = '';
+                        // Simulación de respuesta automática
+                        setTimeout(function() {
+                            addBotMessage("Gracias por tu mensaje. ¡Estoy aquí para ayudarte!");
+                        }, 500);
+                    } else if (!loggedInChatUsername) {
+                        alert('Por favor, regístrate o inicia sesión para chatear.');
+                    }
+                });
+            }
 
             if (resetChatButton) {
                 resetChatButton.addEventListener('click', function() {
@@ -456,16 +582,16 @@
                 resetUsersButton.addEventListener('click', function() {
                     console.log("¡Botón 'Reiniciar Usuarios Registrados' clickeado!"); // Para verificar si se hace clic
                     localStorage.removeItem('chatUsername');
-                    loggedInUsername = null;
+                    loggedInChatUsername = null;
                     updateOnlineUsers();
-                    chatPanelDiv.style.display = 'none';
-                    chatRegistrationDiv.style.display = 'flex';
+                    document.getElementById('chat-panel').style.display = 'none';
+                    document.getElementById('chat-registration').style.display = 'flex';
                     alert('Los usuarios registrados en el chat local han sido reiniciados.');
                     window.location.reload(); // Forzar la recarga para asegurar que el estado se restablezca
                 });
             }
 
-            function addUserMessage(username, message) {
+            function addUserMessageChat(username, message) {
                 const messageDiv = document.createElement('p');
                 messageDiv.textContent = `${username}: ${message}`;
                 chatMessagesList.appendChild(messageDiv);

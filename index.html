@@ -6,10 +6,23 @@
     <title>Iniciar Sesión</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="icon/cerrar.ico" type="image/x-icon">
+    <style>
+        body {
+            /* Remove inline background image */
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4; /* Fallback background color */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+            background-position: center; /* Centra la imagen de fondo */
+            transition: background-image 0.5s ease-in-out; /* Opcional: Transición suave al cambiar la imagen */
+        }
+    </style>
 </head>
-<body style="background-image: url(https://img.freepik.com/vector-gratis/fondo-hexagonal-degradado_23-2148944164.jpg?t=st=1743178868~exp=1743182468~hmac=6dee7a86ad8d5240681219da568193dc898f7e257d1b303fa099f2f6d6354b1f&w=2000);">
-
-
+<body>
     <div class="login-container" style="margin-top: 250px;">
         <h1>Iniciar Sesión</h1>
         <div class="form-group">
@@ -38,6 +51,97 @@
         </div>
     </div>
 
-    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const body = document.body;
+            const backgroundImages = [
+                'icon/1.jpg',
+                'icon/2.jpg',
+                'icon/3.jpg'
+                // Agrega aquí las rutas relativas de tus otras dos imágenes
+            ];
+
+            function setRandomBackgroundImage() {
+                const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+                const randomImage = backgroundImages[randomIndex];
+                body.style.backgroundImage = `url('${randomImage}')`;
+            }
+            // Establecer una imagen de fondo aleatoria al cargar la página
+            setRandomBackgroundImage();
+
+            // Puedes opcionalmente cambiar la imagen cada cierto tiempo
+            // setInterval(setRandomBackgroundImage, 5000); // Cambiar cada 5 segundos
+
+            // Resto de tu código JavaScript (script.js)
+            const generatePasswordButton = document.getElementById('generate-password');
+            const passwordInput = document.getElementById('password');
+            const loginButton = document.getElementById('login-button');
+            const usernameInput = document.getElementById('username');
+            const chatBox = document.querySelector('.chat-box');
+            const chatMessages = document.getElementById('chat-messages');
+            const userInput = document.getElementById('user-input');
+            const sendButton = document.getElementById('send-button');
+
+            if (generatePasswordButton) {
+                generatePasswordButton.addEventListener('click', function() {
+                    const randomPassword = Math.random().toString(36).slice(-8);
+                    passwordInput.value = randomPassword;
+                });
+            }
+
+            if (loginButton) {
+                loginButton.addEventListener('click', function() {
+                    const username = usernameInput.value.trim();
+                    if (username) {
+                        localStorage.setItem('username', username);
+                        window.location.href = 'dashboard.html'; // Reemplaza con la URL de tu dashboard
+                    } else {
+                        alert('Por favor, ingresa tu nombre de usuario.');
+                    }
+                });
+            }
+
+            if (sendButton) {
+                sendButton.addEventListener('click', function() {
+                    const message = userInput.value.trim();
+                    if (message) {
+                        const userMessage = document.createElement('p');
+                        userMessage.classList.add('user-message');
+                        userMessage.textContent = message;
+                        chatMessages.appendChild(userMessage);
+                        userInput.value = '';
+
+                        // Aquí puedes agregar lógica para la respuesta del bot basada en el mensaje del usuario
+                        if (message.toLowerCase().includes('hola')) {
+                            setTimeout(() => {
+                                const botResponse = document.createElement('p');
+                                botResponse.classList.add('bot-message');
+                                botResponse.textContent = '¡Hola! ¿En qué puedo ayudarte?';
+                                chatMessages.appendChild(botResponse);
+                                chatMessages.scrollTop = chatMessages.scrollHeight;
+                            }, 500);
+                        } else {
+                            setTimeout(() => {
+                                const botResponse = document.createElement('p');
+                                botResponse.classList.add('bot-message');
+                                botResponse.textContent = 'Gracias por tu mensaje.';
+                                chatMessages.appendChild(botResponse);
+                                chatMessages.scrollTop = chatMessages.scrollHeight;
+                            }, 1000);
+                        }
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }
+                });
+            }
+
+            if (userInput) {
+                userInput.addEventListener('keypress', function(event) {
+                    if (event.key === 'Enter') {
+                        sendButton.click();
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

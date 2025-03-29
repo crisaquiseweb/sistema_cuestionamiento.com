@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const nombreClienteInput = document.getElementById('nombre_cliente');
+    const tiendaInput = document.getElementById('tienda'); // Asegúrate de tener un input con este ID en tu HTML
     const osiptelCaptureInput = document.getElementById('osiptel_capture');
     const transferenciaOsiptelInput = document.getElementById('transferencia_osiptel');
     const fotoImeiFisicoInput = document.getElementById('foto_imei_fisico');
@@ -10,89 +11,74 @@ document.addEventListener('DOMContentLoaded', function() {
     const exportarPdfButton = document.getElementById('exportar_pdf');
     const mensajeExportacionDiv = document.getElementById('mensaje_exportacion');
 
-    async function embedFile(pdfDoc, file, originalFilename) {
-        return new Promise((resolve, reject) => {
+    async function embedFile(pdfDoc, file, headerText) {
+        return new Promise(async (resolve, reject) => {
             if (!file) {
                 resolve();
                 return;
             }
-            const reader = new FileReader();
-            reader.onload = async function(event) {
-                try {
-                    const bytes = new Uint8Array(event.target.result);
-                    const filenameText = originalFilename || 'Encabezado';
-                    const filenameFontSize = 10;
-                    const textX = 50;
-                    const textY = 30; // Near the bottom of the page
-                    const helveticaFont = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
-                    const textColor = PDFLib.rgb(0, 0, 0);
+            try {
+                const bytes = new Uint8Array(await file.arrayBuffer());
 
-                    console.log(`Embedding file: ${originalFilename}, type: ${file.type}`);
+                if (file.type === 'application/pdf') {
+                    const pdf = await PDFLib.PDFDocument.load(bytes);
+                    const copiedPages = await pdfDoc.copyPages(pdf, pdf.getPageIndices());
+                    copiedPages.forEach(copiedPage => {
+                        pdfDoc.addPage(copiedPage);
+                        // Si es un PDF, no se añade el encabezado aquí, se asume que ya lo tiene.
+                        // Tampoco se ajusta el tamaño de la página del PDF subido desde aquí.
+                    });
+                    resolve();
+                } else if (file.type.startsWith('image/')) {
+                    let image;
+                    if (file.type === 'image/png') {
+                        image = await pdfDoc.embedPng(bytes);
+                    } else if (file.type === 'image/jpeg' || file.type === 'image/jpg') {
+                        image = await pdfDoc.embedJpg(bytes);
+                    }
 
-                    if (file.type === 'application/pdf') {
-                        const pdf = await PDFLib.PDFDocument.load(bytes);
-                        const copiedPages = await pdfDoc.copyPages(pdf, pdf.getPageIndices());
-                        copiedPages.forEach(copiedPage => {
-                            pdfDoc.addPage(copiedPage);
-                            const currentPage = pdfDoc.getPages()[pdfDoc.getPages().length - 1];
-                            currentPage.drawText(filenameText, {
-                                x: textX,
-                                y: textY,
-                                size: filenameFontSize,
-                                font: helveticaFont,
-                                color: textColor,
-                            });
-                            console.log(`Filename "${filenameText}" added to PDF page.`);
+                    if (image) {
+                        const page = pdfDoc.addPage();
+                        const { width: originalWidth, height: originalHeight } = image;
+                        const pageWidth = page.getWidth();
+                        const pageHeight = page.getHeight();
+                        const headerFontSize = 18;
+                        const imageWidth = 400; // Tamaño A4 aproximado para el ancho
+                        const imageHeight = (imageWidth / originalWidth) * originalHeight; // Mantener proporción
+                        const helveticaBoldFont = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+                        const headerTextWidth = helveticaBoldFont.widthOfTextAtSize(headerText, headerFontSize);
+                        const headerX = (pageWidth - headerTextWidth) / 2;
+                        const headerY = pageHeight - 70; // Ajustar margen superior
+
+                        page.drawText(headerText, {
+                            x: headerX,
+                            y: headerY,
+                            font: helveticaBoldFont,
+                            size: headerFontSize,
                         });
-                    } else if (file.type.startsWith('image/')) {
-                        let image;
-                        if (file.type === 'image/png') {
-                            image = await pdfDoc.embedPng(bytes);
-                        } else if (file.type === 'image/jpeg' || file.type === 'image/jpg') {
-                            image = await pdfDoc.embedJpg(bytes);
-                        }
-                        if (image) {
-                            const page = pdfDoc.addPage();
-                            const { width, height } = image;
-                            const pageWidth = page.getWidth();
-                            const pageHeight = page.getHeight();
-                            const scale = Math.min(pageWidth / width, pageHeight / height) * 0.95;
-                            const scaledWidth = width * scale;
-                            const scaledHeight = height * scale;
 
-                            page.drawImage(image, {
-                                x: pageWidth / 2 - scaledWidth / 2,
-                                y: pageHeight / 2 - scaledHeight / 2,
-                                width: scaledWidth,
-                                height: scaledHeight,
-                            });
-                            page.drawText(filenameText, {
-                                x: textX,
-                                y: textY,
-                                size: filenameFontSize,
-                                font: helveticaFont,
-                                color: textColor,
-                            });
-                            console.log(`Filename "${filenameText}" added to image page.`);
-                        }
+                        page.drawImage(image, {
+                            x: (pageWidth - imageWidth) / 2,
+                            y: headerY - imageHeight - 20, // Ajustar espacio entre encabezado e imagen
+                            width: imageWidth,
+                            height: imageHeight,
+                        });
                     }
                     resolve();
-                } catch (error) {
-                    console.error('Error embedding file:', error);
-                    reject(error);
+                } else {
+                    resolve(); // Si el tipo de archivo no es PDF ni imagen, simplemente resolvemos.
                 }
-            };
-            reader.onerror = function(error) {
-                console.error('Error reading file:', error);
+            } catch (error) {
+                console.error('Error embedding file:', error);
                 reject(error);
-            };
-            reader.readAsArrayBuffer(file);
+            }
         });
     }
 
     exportarPdfButton.addEventListener('click', async function() {
         mensajeExportacionDiv.textContent = 'Generando PDF...';
         const nombreCliente = nombreClienteInput.value.trim();
+        const tienda = tiendaInput?.value.trim() || '';
         if (!nombreCliente) {
             alert('Por favor, ingresa el nombre del cliente.');
             mensajeExportacionDiv.textContent = '';
@@ -101,46 +87,68 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const pdfDoc = await PDFLib.PDFDocument.create();
         const helveticaFont = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
-        const headerPage = pdfDoc.addPage();
-        const pageWidth = headerPage.getWidth();
-        const fontSize = 24;
-        const subFontSize = 18;
+        const helveticaBoldFont = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+        const firstPage = pdfDoc.addPage();
+        const pageWidth = firstPage.getWidth();
+        const pageHeight = firstPage.getHeight();
+        const mainTitleFontSize = 24;
+        const subTitleFontSize = 16;
         const textColor = PDFLib.rgb(0, 0, 0);
+        const margin = 50;
 
-        const titleText = 'REPORTE DE IMEI CLONADO/DUPLCIADO';
-        const titleWidth = helveticaFont.widthOfTextAtSize(titleText, fontSize);
-        const titleX = (pageWidth - titleWidth) / 2;
+        const mainTitleText = 'REPORTE DE IMEI CLONADO / DUPLICADO';
+        const clientText = `NOMBRE DEL CLIENTE: ${nombreCliente}`;
+        const tiendaText = `TIENDA: ${tienda}`;
 
-        const clientText = `Nombre del Cliente: ${nombreCliente}`;
-        const clientWidth = helveticaFont.widthOfTextAtSize(clientText, subFontSize);
-        const clientX = (pageWidth - clientWidth) / 2;
-        const titleY = headerPage.getHeight() - 50;
-        const clientY = titleY - fontSize - 10;
+        const mainTitleWidth = helveticaBoldFont.widthOfTextAtSize(mainTitleText, mainTitleFontSize);
+        const clientTextWidth = helveticaFont.widthOfTextAtSize(clientText, subTitleFontSize);
+        const tiendaTextWidth = helveticaFont.widthOfTextAtSize(tiendaText, subTitleFontSize);
 
-        // Add header page
-        headerPage.drawText(titleText, {
-            x: titleX,
-            y: titleY,
-            size: fontSize,
+        const totalTextHeight = (mainTitleFontSize + subTitleFontSize + subTitleFontSize) + 20;
+        const startY = (pageHeight - totalTextHeight) / 2 + totalTextHeight;
+
+        // Draw main title
+        firstPage.drawText(mainTitleText, {
+            x: (pageWidth - mainTitleWidth) / 2,
+            y: startY - mainTitleFontSize - 10,
+            size: mainTitleFontSize,
+            font: helveticaBoldFont,
+            color: textColor,
+        });
+
+        // Draw client name
+        firstPage.drawText(clientText, {
+            x: (pageWidth - clientTextWidth) / 2,
+            y: startY - mainTitleFontSize - 10 - subTitleFontSize - 5,
+            size: subTitleFontSize,
             font: helveticaFont,
             color: textColor,
         });
-        headerPage.drawText(clientText, {
-            x: clientX,
-            y: clientY,
-            size: subFontSize,
+
+        // Draw tienda name
+        firstPage.drawText(tiendaText, {
+            x: (pageWidth - tiendaTextWidth) / 2,
+            y: startY - mainTitleFontSize - 10 - subTitleFontSize - 5 - subTitleFontSize - 5,
+            size: subTitleFontSize,
             font: helveticaFont,
             color: textColor,
         });
 
         try {
-            await embedFile(pdfDoc, osiptelCaptureInput.files[0], osiptelCaptureInput.files[0]?.name);
-            await embedFile(pdfDoc, transferenciaOsiptelInput.files[0], transferenciaOsiptelInput.files[0]?.name);
-            await embedFile(pdfDoc, fotoImeiFisicoInput.files[0], fotoImeiFisicoInput.files[0]?.name);
-            await embedFile(pdfDoc, fotoImeiLogicoInput.files[0], fotoImeiLogicoInput.files[0]?.name);
-            await embedFile(pdfDoc, solicitudAbonadoInput.files[0], solicitudAbonadoInput.files[0]?.name);
-            await embedFile(pdfDoc, validacionIdentidadInput.files[0], validacionIdentidadInput.files[0]?.name);
-            await embedFile(pdfDoc, capturaGsmaInput.files[0], capturaGsmaInput.files[0]?.name);
+            // Segunda página y siguientes para los archivos
+            const files = [
+                { file: osiptelCaptureInput.files[0], header: '1. CAPTURA DE PÁGINA DE OSIPTEL:' },
+                { file: transferenciaOsiptelInput.files[0], header: '2. CAPTURA DE TRANSFERENCIA A OSIPTEL:' },
+                { file: fotoImeiFisicoInput.files[0], header: '3. FOTO IMEI FÍSICO:' },
+                { file: fotoImeiLogicoInput.files[0], header: '4. FOTO IMEI LÓGICO:' },
+                { file: solicitudAbonadoInput.files[0], header: '5. SOLICITUD DE CUESTIONAMIENTO PRESENTADO POR EL ABONADO:' },
+                { file: validacionIdentidadInput.files[0], header: '6. VALIDACIÓN DE IDENTIDAD:' },
+                { file: capturaGsmaInput.files[0], header: '7. CAPTURA GSMA:' }
+            ];
+
+            for (const item of files) {
+                await embedFile(pdfDoc, item.file, item.header);
+            }
 
             const pdfBytes = await pdfDoc.save();
             const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
