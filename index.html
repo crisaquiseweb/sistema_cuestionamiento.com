@@ -8,7 +8,6 @@
     <link rel="icon" href="icon/cerrar.ico" type="image/x-icon">
     <style>
         body {
-            /* Remove inline background image */
             font-family: sans-serif;
             margin: 0;
             padding: 0;
@@ -21,6 +20,7 @@
             transition: background-image 0.5s ease-in-out; /* Opcional: Transición suave al cambiar la imagen */
         }
     </style>
+    <script src="js/script.js"></script> <!- - Enlace a tu archivo JavaScript - ->
 </head>
 <body>
     <div class="login-container" style="margin-top: 250px;">
@@ -36,7 +36,7 @@
         <div class="form-group">
             <button type="button" id="generate-password" >Generar Contraseña</button>
         </div>
-        <button id="login-button" type="button">Iniciar Sesion</button>
+        <button id="login-button">Iniciar Sesion</button>
         <p><a href="#">Contactar al soporte</a></p>
     </div>
 
@@ -50,98 +50,5 @@
             <button id="send-button">Enviar</button>
         </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const body = document.body;
-            const backgroundImages = [
-                'icon/1.jpg',
-                'icon/2.jpg',
-                'icon/3.jpg'
-                // Agrega aquí las rutas relativas de tus otras dos imágenes
-            ];
-
-            function setRandomBackgroundImage() {
-                const randomIndex = Math.floor(Math.random() * backgroundImages.length);
-                const randomImage = backgroundImages[randomIndex];
-                body.style.backgroundImage = `url('${randomImage}')`;
-            }
-            // Establecer una imagen de fondo aleatoria al cargar la página
-            setRandomBackgroundImage();
-
-            // Puedes opcionalmente cambiar la imagen cada cierto tiempo
-            // setInterval(setRandomBackgroundImage, 5000); // Cambiar cada 5 segundos
-
-            // Resto de tu código JavaScript (script.js)
-            const generatePasswordButton = document.getElementById('generate-password');
-            const passwordInput = document.getElementById('password');
-            const loginButton = document.getElementById('login-button');
-            const usernameInput = document.getElementById('username');
-            const chatBox = document.querySelector('.chat-box');
-            const chatMessages = document.getElementById('chat-messages');
-            const userInput = document.getElementById('user-input');
-            const sendButton = document.getElementById('send-button');
-
-            if (generatePasswordButton) {
-                generatePasswordButton.addEventListener('click', function() {
-                    const randomPassword = Math.random().toString(36).slice(-8);
-                    passwordInput.value = randomPassword;
-                });
-            }
-
-            if (loginButton) {
-                loginButton.addEventListener('click', function() {
-                    const username = usernameInput.value.trim();
-                    if (username) {
-                        localStorage.setItem('username', username);
-                        window.location.href = 'dashboard.html'; // Reemplaza con la URL de tu dashboard
-                    } else {
-                        alert('Por favor, ingresa tu nombre de usuario.');
-                    }
-                });
-            }
-
-            if (sendButton) {
-                sendButton.addEventListener('click', function() {
-                    const message = userInput.value.trim();
-                    if (message) {
-                        const userMessage = document.createElement('p');
-                        userMessage.classList.add('user-message');
-                        userMessage.textContent = message;
-                        chatMessages.appendChild(userMessage);
-                        userInput.value = '';
-
-                        // Aquí puedes agregar lógica para la respuesta del bot basada en el mensaje del usuario
-                        if (message.toLowerCase().includes('hola')) {
-                            setTimeout(() => {
-                                const botResponse = document.createElement('p');
-                                botResponse.classList.add('bot-message');
-                                botResponse.textContent = '¡Hola! ¿En qué puedo ayudarte?';
-                                chatMessages.appendChild(botResponse);
-                                chatMessages.scrollTop = chatMessages.scrollHeight;
-                            }, 500);
-                        } else {
-                            setTimeout(() => {
-                                const botResponse = document.createElement('p');
-                                botResponse.classList.add('bot-message');
-                                botResponse.textContent = 'Gracias por tu mensaje.';
-                                chatMessages.appendChild(botResponse);
-                                chatMessages.scrollTop = chatMessages.scrollHeight;
-                            }, 1000);
-                        }
-                        chatMessages.scrollTop = chatMessages.scrollHeight;
-                    }
-                });
-            }
-
-            if (userInput) {
-                userInput.addEventListener('keypress', function(event) {
-                    if (event.key === 'Enter') {
-                        sendButton.click();
-                    }
-                });
-            }
-        });
-    </script>
 </body>
 </html>
