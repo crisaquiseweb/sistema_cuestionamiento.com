@@ -6,7 +6,7 @@
     <title>Panel de Inicio</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="icon/casa.ico" type="image/x-icon">
-</head>
+    </head>
 <body style="background:#202d31;">
     <header>
         <nav>
@@ -15,6 +15,8 @@
                 <li><a href="pages/cuestionamiento.html" target="content-frame">CUESTIONAMIENTO</a></li>
                 <li><a href="pages/consolidado.html" target="content-frame">CONSOLIDADO</a></li>
                 <li><a href="pages/generador_pdf.html" target="content-frame">GENERADOR PDF</a></li>
+                <li><a href="#" class="development-link" data-message="CONVERTIR PDF A WORD">CONVERTIR PDF A WORD</a></li>
+                <li><a href="#" class="development-link" data-message="EDITOR PDF">EDITOR PDF</a></li>
                 <li><a href="pages/usuarios_conectados.html" target="content-frame">USUARIOS CONECTADOS</a></li>
             </ul>
         </nav>
@@ -27,9 +29,9 @@
 
     <main>
         <div class="dashboard-info" style="margin-top:8px;">
-            <h2 style="font-family: Arial, Helvetica, sans-serif; color: #fff; font-size: 40px;">ESTAS EN TU PANEL DE CONTROL</h2>
-            <p style="font-family: Arial, Helvetica, sans-serif; color: #f38c08;font-size: 30px;">BIENVENIDO, <span id="welcome-username"></span>!</p>
-            <div class="real-time" style="font-family:Arial, Helvetica, sans-serif; color: #fff;font-size: 25px;">
+            <h2 style="font-family: Arial, Helvetica, sans-serif; color: #fff; font-size: 40px;margin-left: 190px;">ESTAS EN TU PANEL DE CONTROL</h2>
+            <p style="font-family: Arial, Helvetica, sans-serif; color: #f38c08;font-size: 30px;margin-left: 190px;">BIENVENIDO, <span id="welcome-username"></span>!</p>
+            <div class="real-time" style="font-family:Arial, Helvetica, sans-serif; color: #fff;font-size: 25px;margin-left: 190px;">
                 <span id="current-time"></span>
                 <span id="current-date"></span>
             </div>
@@ -51,6 +53,7 @@
             const currentDateDisplay = document.getElementById('current-date');
             const logoutButton = document.getElementById('logout-button');
             const userAvatar = document.getElementById('user-avatar');
+            const developmentLinks = document.querySelectorAll('.development-link');
 
             const loggedInUsername = localStorage.getItem('username');
 
@@ -87,6 +90,14 @@
             logoutButton.addEventListener('click', function() {
                 localStorage.removeItem('username');
                 window.location.href = 'index.html';
+            });
+
+            developmentLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault(); // Evitar que el enlace intente navegar
+                    const featureName = this.getAttribute('data-message');
+                    alert(`La sección "${featureName}" se encuentra en desarrollo.`);
+                });
             });
         });
     </script>

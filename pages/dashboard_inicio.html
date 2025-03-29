@@ -83,6 +83,12 @@
             color: #007bff;
         }
 
+        .connected-users-section h4 {
+            margin-top: 15px;
+            margin-bottom: 10px;
+            color: #6c757d;
+        }
+
         .user-list {
             flex-grow: 1;
             overflow-y: auto;
@@ -246,32 +252,68 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             margin-top: 30px;
             display: flex;
-            gap: 30px;
-            text-align: center;
+            flex-direction: column; /* Cambiado a flex column */
+            gap: 20px;
+            width: 80%; /* Ajustar el ancho si es necesario */
         }
 
         .statistic-item {
-            flex: 1;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 5px;
             text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        .statistic-item:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .statistic-item:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .statistic-item:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .statistic-item:nth-child(4) {
+            animation-delay: 0.8s;
+        }
+
+        .statistic-item:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
 
         .statistic-item h3 {
             color: #28a745;
             margin-top: 0;
-            font-size: 1.5em;
+            font-size: 1.2em;
+            margin-bottom: 10px;
         }
 
         .statistic-item .value {
-            font-size: 2em;
+            font-size: 1.8em;
             font-weight: bold;
             color: #007bff;
+            animation: pulse 1s infinite alternate;
+        }
+
+        .statistic-item .description {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
         }
 
         /* Barra de progreso */
         .progress-bar-container {
             background-color: #e0e0e0;
             border-radius: 5px;
-            height: 25px;
+            height: 15px;
             width: 100%;
             margin-top: 10px;
             overflow: hidden;
@@ -289,26 +331,18 @@
             justify-content: center;
             color: white;
             font-weight: bold;
-            font-size: 0.9em;
+            font-size: 0.8em;
         }
 
         /* Animaciones */
-        @keyframes countUp {
+        @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .statistic-item {
-            animation: countUp 0.8s ease-out forwards;
-            opacity: 0;
-        }
-
-        .statistic-item:nth-child(2) {
-            animation-delay: 0.3s;
-        }
-
-        .statistic-item:nth-child(3) {
-            animation-delay: 0.6s;
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
         }
     </style>
 </head>
@@ -325,10 +359,6 @@
     <div class="dashboard-container" id="dashboard-content" style="display: none;">
         <aside class="chat-sidebar">
             <h3>Chat Local</h3>
-            <div class="user-list">
-                <ul>
-                    </ul>
-            </div>
             <div class="chat-registration" id="chat-registration">
                 <input type="text" id="register-username" placeholder="Nombre de usuario">
                 <button id="register-button-chat">Registrarse/Iniciar Sesión</button>
@@ -339,6 +369,13 @@
                 <div class="chat-input">
                     <input type="text" id="chat-input-message" placeholder="Escribe tu mensaje...">
                     <button id="chat-send-button">Enviar</button>
+                </div>
+            </div>
+            <div class="connected-users-section">
+                <h4>Usuarios Conectados</h4>
+                <div class="user-list">
+                    <ul>
+                        </ul>
                 </div>
             </div>
         </aside>
@@ -359,18 +396,26 @@
 
             <section class="statistics">
                 <div class="statistic-item">
-                    <h3>Crecimiento de Registro</h3>
-                    <p class="value" id="registro-crecimiento" data-final="15">0%</p>
+                    <h3>Usuarios Activos Hoy</h3>
+                    <p class="value" id="usuarios-activos-hoy" data-final="35">0</p>
+                    <p class="description">Usuarios que han interactuado hoy.</p>
                 </div>
                 <div class="statistic-item">
-                    <h3>Registros del Mes</h3>
-                    <p class="value" id="registros-mes" data-final="125">0</p>
+                    <h3>Nuevos Usuarios (Mes)</h3>
+                    <p class="value" id="nuevos-usuarios-mes" data-final="125">0</p>
+                    <p class="description">Usuarios registrados este mes.</p>
                 </div>
                 <div class="statistic-item">
-                    <h3>Registros Anuales</h3>
+                    <h3>Tasa de Retención</h3>
+                    <p class="value" id="tasa-retencion" data-final="75">0%</p>
+                    <p class="description">Porcentaje de usuarios que regresan.</p>
+                </div>
+                <div class="statistic-item">
+                    <h3>Uso de la Plataforma</h3>
                     <div class="progress-bar-container">
-                        <div class="progress-bar-fill" id="registros-anuales-progress" data-final="1580">0</div>
+                        <div class="progress-bar-fill" id="uso-plataforma-progress" data-final="80">0%</div>
                     </div>
+                    <p class="description">Capacidad actual de la plataforma.</p>
                 </div>
             </section>
         </main>
@@ -483,28 +528,28 @@
                 window.requestAnimationFrame(step);
             }
 
-            const crecimientoRegistro = document.getElementById('registro-crecimiento');
-            const registrosMes = document.getElementById('registros-mes');
+            const usuariosActivosHoy = document.getElementById('usuarios-activos-hoy');
+            const nuevosUsuariosMes = document.getElementById('nuevos-usuarios-mes');
+            const tasaRetencion = document.getElementById('tasa-retencion');
 
-            animateValue('registro-crecimiento', 0, parseInt(crecimientoRegistro.dataset.final), 1500, '%');
-            animateValue('registros-mes', 0, parseInt(registrosMes.dataset.final), 2000);
+            animateValue('usuarios-activos-hoy', 0, parseInt(usuariosActivosHoy.dataset.final), 1500);
+            animateValue('nuevos-usuarios-mes', 0, parseInt(nuevosUsuariosMes.dataset.final), 2000);
+            animateValue('tasa-retencion', 0, parseInt(tasaRetencion.dataset.final), 1800, '%');
 
-            // Animación de la barra de progreso para registros anuales
-            const progressBarFill = document.getElementById('registros-anuales-progress');
-            const annualRegistrations = parseInt(progressBarFill.dataset.final);
+            // Animación de la barra de progreso para uso de la plataforma
+            const usoPlataformaProgress = document.getElementById('uso-plataforma-progress');
+            const usoPlataformaValue = parseInt(usoPlataformaProgress.dataset.final);
             const progressBarDuration = 2500;
 
             function animateProgressBar(element, finalValue, duration) {
                 let startTime = null;
-                const total = 2000; // Simulación del total de registros anuales posibles
-                const targetWidth = (finalValue / total) * 100;
 
                 function step(timestamp) {
                     if (!startTime) startTime = timestamp;
                     const progress = Math.min((timestamp - startTime) / duration, 1);
-                    const currentWidth = progress * targetWidth;
+                    const currentWidth = progress * finalValue;
                     element.style.width = currentWidth + '%';
-                    element.textContent = Math.floor(currentWidth / 100 * total); // Mostrar el número en la barra
+                    element.textContent = Math.floor(currentWidth) + '%';
                     if (progress < 1) {
                         window.requestAnimationFrame(step);
                     }
@@ -512,7 +557,7 @@
                 window.requestAnimationFrame(step);
             }
 
-            animateProgressBar(progressBarFill, annualRegistrations, progressBarDuration);
+            animateProgressBar(usoPlataformaProgress, usoPlataformaValue, progressBarDuration);
 
             // Funcionalidad del Chat Local
             const registerButtonChat = document.getElementById('register-button-chat');
@@ -522,22 +567,22 @@
             const resetChatButton = document.getElementById('reset-chat-button');
             const userListUl = document.querySelector('.user-list ul');
             let loggedInChatUsername = localStorage.getItem('chatUsername');
+            let connectedUsers = new Set(); // Usar un Set para evitar duplicados
 
             function updateOnlineUsers() {
                 userListUl.innerHTML = '';
-                if (loggedInChatUsername) {
+                connectedUsers.forEach(username => {
                     const li = document.createElement('li');
-                    li.textContent = loggedInChatUsername;
+                    li.textContent = username;
                     userListUl.appendChild(li);
-                }
-                // Aquí podrías agregar lógica para mostrar otros usuarios conectados si tuvieras esa funcionalidad
+                });
             }
-
-            updateOnlineUsers();
 
             if (loggedInChatUsername) {
                 document.getElementById('chat-registration').style.display = 'none';
                 document.getElementById('chat-panel').style.display = 'flex';
+                connectedUsers.add(loggedInChatUsername);
+                updateOnlineUsers();
             }
 
             if (registerButtonChat) {
@@ -548,6 +593,7 @@
                         localStorage.setItem('chatUsername', loggedInChatUsername);
                         document.getElementById('chat-registration').style.display = 'none';
                         document.getElementById('chat-panel').style.display = 'flex';
+                        connectedUsers.add(loggedInChatUsername);
                         updateOnlineUsers();
                         addBotMessage(`Bienvenido, ${loggedInChatUsername}!`); // Mensaje automático al registrarse
                     } else {
@@ -583,6 +629,7 @@
                     console.log("¡Botón 'Reiniciar Usuarios Registrados' clickeado!"); // Para verificar si se hace clic
                     localStorage.removeItem('chatUsername');
                     loggedInChatUsername = null;
+                    connectedUsers.clear();
                     updateOnlineUsers();
                     document.getElementById('chat-panel').style.display = 'none';
                     document.getElementById('chat-registration').style.display = 'flex';
