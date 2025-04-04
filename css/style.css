@@ -1,0 +1,559 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Estilos para la página de login */
+.login-container {
+    background-color: #001229;
+    padding: 20px; /* Reducir el padding para pantallas más pequeñas */
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%; /* Hacer el contenedor más fluido */
+    max-width: 400px; /* Establecer un ancho máximo para pantallas grandes */
+    margin: 30px auto; /* Reducir el margen superior e inferior */
+    border: 15px;
+    text-align: center;
+    font-family: system-ui;
+}
+
+.login-container h1 {
+    margin-bottom: 15px; /* Reducir el margen inferior */
+    color: #fff;
+    font-family: system-ui;
+    font-size: 1.5em; /* Usar unidades relativas */
+}
+
+.form-group {
+    margin-bottom: 10px; /* Reducir el margen inferior */
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 3px; /* Reducir el margen inferior */
+    color: #fff;
+    font-size: 1em; /* Usar unidades relativas */
+    justify-content: center;
+    font-family: system-ui;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    width: calc(100% - 16px); /* Ajustar el cálculo del ancho */
+    padding: 8px;
+    background-color: transparent;
+    border: 2px solid #fff;
+    color: white;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 0.9em; /* Usar unidades relativas */
+}
+
+.login-container button {
+    background-color: #123152;
+    color: #fff;
+    padding: 8px 12px; /* Reducir el padding */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1em; /* Usar unidades relativas */
+    margin-top: 8px; /* Reducir el margen superior */
+    transform: rotateY(360deg);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Añadir transición */
+}
+
+.login-container button:hover {
+    transform: scale(1.02); /* Reducir un poco la escala al hacer hover */
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5); /* Reducir el resplandor */
+}
+
+.login-container p {
+    margin-top: 10px; /* Reducir el margen superior */
+    color: #777;
+    font-size: 0.8em; /* Usar unidades relativas */
+}
+
+.login-container a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9em; /* Usar unidades relativas */
+}
+
+.login-container a:hover {
+    color: #cf5308;
+    text-decoration: none;
+}
+
+header {
+    background-color: #1d1f22;
+    color: white;
+    padding: 10px 15px; /* Reducir el padding */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed; /* Mantenemos la posición fija */
+    top: 0;
+    left: 0;
+    width: 100%; /* Ocupa todo el ancho */
+    z-index: 100;
+    box-sizing: border-box; /* Asegurar que el padding no aumente el ancho total */
+}
+
+header h1 {
+    font-size: 1.2em; /* Reducir el tamaño del título en el header */
+    margin: 0;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    margin-left: 10px; /* Reducir el margen izquierdo */
+    transition: background-color 0.3s ease;
+}
+
+header nav ul li {
+    margin-left: 10px; /* Reducir el margen izquierdo */
+    transition: background-color 0.3s ease;
+}
+
+header nav ul li:first-child {
+    margin-left: 0;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 10px; /* Reducir el padding */
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+    font-weight: normal; /* Usar normal en lugar de unset para evitar sorpresas */
+    font-size: 0.9em; /* Reducir el tamaño de la fuente */
+}
+
+header nav ul li a:hover {
+    background-color: #e2780e;
+}
+
+header nav ul li:hover a {
+    color: white;
+}
+
+main {
+    flex-grow: 1;
+    padding: 20px;
+    padding-top: 60px; /* Ajustar el padding-top según la altura del header */
+    box-sizing: border-box; /* Asegurar que el padding no aumente el alto total */
+}
+
+.dashboard-info {
+    background-color: #1d1f22;
+    padding: 15px; /* Reducir el padding */
+    border-radius: 8px;
+    height: 100px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px; /* Reducir el margen inferior */
+    text-align: center;
+}
+
+.dashboard-info h2 {
+    color: #fff; /* Cambiar el color del título a blanco para que contraste con el fondo */
+    margin-bottom: 8px; /* Reducir el margen inferior */
+    font-size: 1.2em; /* Usar unidades relativas */
+}
+
+.dashboard-info p {
+    color: #eee; /* Cambiar el color del párrafo a un tono más claro */
+    margin-bottom: 8px; /* Reducir el margen inferior */
+    font-size: 0.9em; /* Usar unidades relativas */
+}
+
+.real-time {
+    font-size: 1em; /* Reducir el tamaño de la fuente */
+    color: #ddd; /* Cambiar el color a un tono más claro */
+}
+
+#content-frame {
+    width: 100%;
+    height: 300px; /* Reducir la altura por defecto */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Asegurar que el borde no aumente el tamaño total */
+}
+
+footer {
+    background-color: #1d1f22;
+    color: white;
+    text-align: center;
+    padding: 8px; /* Reducir el padding */
+    font-size: 0.8em; /* Reducir el tamaño de la fuente */
+}
+
+/* Estilos para la información del usuario en el header (lado derecho) */
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info img {
+    width: 20px; /* Reducir el tamaño de la imagen */
+    height: 30px; /* Reducir el tamaño de la imagen */
+    border-radius: 50%;
+    margin-left: 8px; /* Reducir el margen izquierdo */
+}
+
+.user-info span {
+    margin-left: 8px; /* Reducir el margen izquierdo */
+    font-size: 0.9em; /* Reducir el tamaño de la fuente */
+}
+
+.user-info button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 10px; /* Reducir el padding */
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 8px; /* Reducir el margen izquierdo */
+    font-size: 0.8em; /* Reducir el tamaño de la fuente */
+}
+
+.user-info button:hover {
+    background-color: #67085d;
+}
+
+/* Estilos para el chat box */
+.chat-box {
+    position: fixed;
+    bottom: 15px; /* Reducir la distancia desde la parte inferior */
+    right: 15px; /* Reducir la distancia desde la derecha */
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    width: 90%; /* Hacer el chat box más fluido */
+    max-width: 300px; /* Mantener un ancho máximo */
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    background-color:#32833b;
+    color: white;
+    padding: 8px; /* Reducir el padding */
+    text-align: center;
+    border-radius: 5px 5px 0 0;
+    font-size: 1em; /* Usar unidades relativas */
+    cursor: pointer;
+}
+
+.chat-body {
+    padding: 8px; /* Reducir el padding */
+    height: 150px; /* Reducir la altura por defecto */
+    overflow-y: auto;
+    display: flex;
+    color: #fff;
+    background-color: transparent;
+    flex-direction: column;
+    font-size: 0.9em; /* Usar unidades relativas */
+}
+
+.chat-body .bot-message {
+    background-color: #32833b;
+    color: #fff;
+    padding: 6px; /* Reducir el padding */
+    border-radius: 20px;
+    margin-bottom: 3px; /* Reducir el margen inferior */
+    align-self: flex-start;
+}
+
+.chat-body .user-message {
+    background-color: #001A38;
+    color: #fff;
+    padding: 6px; /* Reducir el padding */
+    border-radius: 20px;
+    margin-bottom: 3px; /* Reducir el margen inferior */
+    align-self: flex-end;
+}
+
+.chat-input {
+    display: flex;
+    padding: 8px; /* Reducir el padding */
+    border-top: 1px solid #32833b;
+}
+
+.chat-input input[type="text"] {
+    flex-grow: 1;
+    padding: 6px; /* Reducir el padding */
+    border: 1px solid #001A38;
+    background-color: transparent;
+    color: white;
+    border-radius: 3px;
+    margin-right: 3px; /* Reducir el margen derecho */
+    font-size: 0.9em; /* Usar unidades relativas */
+}
+
+.chat-input button {
+    background-color: #001A38;
+    color: white;
+    font-size: 0.9em; /* Usar unidades relativas */
+    border: none;
+    padding: 6px 8px; /* Reducir el padding */
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.chat-input button:hover {
+    background-color: #0056b3;
+}
+
+/* Media Queries para diferentes tamaños de pantalla */
+
+/* Para tablets (ancho mínimo de 768px) */
+@media (min-width: 768px) {
+    .login-container {
+        width: 400px;
+        margin: 80px auto;
+    }
+
+    .login-container h1 {
+        font-size: 2em;
+    }
+
+    .form-group label {
+        font-size: 1.2em;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="password"] {
+        padding: 10px;
+        font-size: 1em;
+    }
+
+    .login-container button {
+        padding: 12px 18px;
+        font-size: 1.2em;
+        margin-top: 12px;
+    }
+
+    header {
+        padding: 15px 20px;
+    }
+
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    header nav ul li {
+        margin-left: 15px;
+    }
+
+    header nav ul li a {
+        padding: 10px 15px;
+        font-size: 1em;
+    }
+
+    main {
+        padding: 30px;
+        padding-top: 70px;
+    }
+
+    .dashboard-info {
+        padding: 20px;
+    }
+
+    .dashboard-info h2 {
+        font-size: 1.5em;
+    }
+
+    .dashboard-info p {
+        font-size: 1em;
+    }
+
+    #content-frame {
+        height: 400px;
+    }
+
+    footer {
+        padding: 10px;
+        font-size: 1em;
+    }
+
+    .user-info img {
+        width: 35px;
+        height: 35px;
+        margin-left: 10px;
+    }
+
+    .user-info span {
+        font-size: 1em;
+        margin-left: 10px;
+    }
+
+    .user-info button {
+        padding: 8px 12px;
+        font-size: 0.9em;
+        margin-left: 10px;
+    }
+
+    .chat-box {
+        bottom: 20px;
+        right: 20px;
+        width: 300px;
+    }
+
+    .chat-header {
+        padding: 10px;
+        font-size: 1.2em;
+    }
+
+    .chat-body {
+        height: 250px;
+        font-size: 1em;
+    }
+
+    .chat-input {
+        padding: 10px;
+    }
+
+    .chat-input input[type="text"] {
+        padding: 8px;
+        font-size: 1em;
+        margin-right: 5px;
+    }
+
+    .chat-input button {
+        font-size: 1em;
+        padding: 8px 10px;
+    }
+}
+
+/* Para laptops y escritorios (ancho mínimo de 1024px) */
+@media (min-width: 1024px) {
+    .login-container {
+        width: 450px;
+        margin: 100px auto;
+    }
+
+    .login-container h1 {
+        font-size: 2.5em;
+    }
+
+    .form-group label {
+        font-size: 1.4em;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="password"] {
+        padding: 12px;
+        font-size: 1.1em;
+    }
+
+    .login-container button {
+        padding: 15px 20px;
+        font-size: 1.3em;
+        margin-top: 15px;
+    }
+
+    header {
+        padding: 20px 30px;
+    }
+
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    header nav ul li {
+        margin-left: 20px;
+    }
+
+    header nav ul li a {
+        padding: 12px 18px;
+        font-size: 1.1em;
+    }
+
+    main {
+        padding: 40px;
+        padding-top: 80px;
+    }
+
+    .dashboard-info {
+        padding: 5px;
+    }
+
+    .dashboard-info h2 {
+        font-size: 1.8em;
+    }
+
+    .dashboard-info p {
+        font-size: 1.1em;
+    }
+
+    #content-frame {
+        height: 500px;
+    }
+
+    footer {
+        padding: 12px;
+        font-size: 1.1em;
+    }
+
+    .user-info img {
+        width: 40px;
+        height: 40px;
+        margin-left: 15px;
+    }
+
+    .user-info span {
+        font-size: 1.1em;
+        margin-left: 15px;
+    }
+
+    .user-info button {
+        padding: 10px 15px;
+        font-size: 1em;
+        margin-left: 15px;
+    }
+
+    .chat-box {
+        bottom: 30px;
+        right: 30px;
+        width: 350px;
+    }
+
+    .chat-header {
+        padding: 12px;
+        font-size: 1.4em;
+    }
+
+    .chat-body {
+        height: 300px;
+        font-size: 1.1em;
+    }
+
+    .chat-input {
+        padding: 12px;
+    }
+
+    .chat-input input[type="text"] {
+        padding: 10px;
+        font-size: 1.1em;
+        margin-right: 8px;
+    }
+
+    .chat-input button {
+        font-size: 1.1em;
+        padding: 10px 12px;
+    }
+}
+
+/* Estilos específicos para celulares (opcional, ya cubierto por los estilos base) */
+/* @media (max-width: 767px) {
+    /* Aquí puedes añadir estilos específicos si los estilos base no son suficientes para celulares
+} */

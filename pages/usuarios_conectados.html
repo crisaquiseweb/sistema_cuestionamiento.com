@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios Conectados</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/usuarios_conectados.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .active-symbol {
+            color: green; /* Puedes personalizar el color */
+        }
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+        .reset-button-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .reset-button {
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .reset-button:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="usuarios-conectados-container">
+        <h2>Usuarios Conectados (Este Navegador)</h2>
+        <div class="reset-button-container">
+            <button id="reset-records" class="reset-button">Reiniciar Registros</button>
+        </div>
+        <table id="usuarios-table">
+            <thead>
+                <tr>
+                    <th>Avatar</th>
+                    <th>Nombre de Usuario</th>
+                    <th>Tiempo de Conexión</th>
+                    <th>Navegador</th>
+                    <th>IP</th>
+                    <th>Estado</th>
+                    </tr>
+            </thead>
+            <tbody>
+                </tbody>
+        </table>
+    </div>
+
+    <script src="../js/usuarios_conectados.js"></script>
+</body>
+</html>

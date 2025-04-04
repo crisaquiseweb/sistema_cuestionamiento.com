@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de PDF</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/generador_pdf.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.4.0/pdf-lib.min.js"></script>
+</head>
+<body>
+    <div class="pdf-generator-container">
+        <h2 style="margin-top: -120px;">Generador de Reporte de IMEI</h2>
+        <div class="form-row">
+            <label for="nombre_cliente">Nombre del Cliente:</label>
+            <input type="text" id="nombre_cliente" name="nombre_cliente" required>
+        </div>
+        <div class="form-row">
+            <label for="tienda">Tienda:</label>
+            <select id="tienda">
+                <option value="TPF TC AYACASAMBLEA2">TPF TC AYACASAMBLEA2</option>
+                <option value="TPF AYACUCHO 1">TPF AYACUCHO 1</option>
+                <option value="TPF HUANCAVELICA">TPF HUANCAVELICA</option>
+            </select>
+        </div>
+
+        <h3>Subir Archivos (en el orden especificado):</h3>
+        <div class="upload-section">
+            <label for="osiptel_capture">1. Captura de página de Osiptel:</label>
+            <input type="file" id="osiptel_capture" class="d-none" accept=".pdf, .png, .jpg, .jpeg">
+            <label class="btn btn-primary" for="osiptel_capture">Seleccionar archivo</label>
+            <span id="osiptel_capture-filename" class="file-upload-text"></span>
+        </div>
+        <div class="upload-section">
+            <label for="transferencia_osiptel">2. Captura de transferencia a Osiptel:</label>
+            <input type="file" id="transferencia_osiptel" class="d-none" accept=".pdf, .png, .jpg, .jpeg">
+            <label class="btn btn-primary" for="transferencia_osiptel">Seleccionar archivo</label>
+            <span id="transferencia_osiptel-filename" class="file-upload-text"></span>
+        </div>
+        <div class="upload-section">
+            <label for="foto_imei_fisico">3. Foto IMEI físico:</label>
+            <input type="file" id="foto_imei_fisico" class="d-none" accept=".png, .jpg, .jpeg">
+            <label class="btn btn-primary" for="foto_imei_fisico">Seleccionar archivo</label>
+            <span id="foto_imei_fisico-filename" class="file-upload-text"></span>
+        </div>
+        <div class="upload-section">
+            <label for="foto_imei_logico">4. Foto IMEI lógico:</label>
+            <input type="file" id="foto_imei_logico" class="d-none" accept=".png, .jpg, .jpeg">
+            <label class="btn btn-primary" for="foto_imei_logico">Seleccionar archivo</label>
+            <span id="foto_imei_logico-filename" class="file-upload-text"></span>
+        </div>
+        <div class="upload-section">
+            <label for="solicitud_abonado">5. Solicitud de cuestionamiento presentado por el abonado:</label>
+            <input type="file" id="solicitud_abonado" class="d-none" accept=".pdf, .png, .jpg, .jpeg">
+            <label class="btn btn-primary" for="solicitud_abonado">Seleccionar archivo</label>
+            <span id="solicitud_abonado-filename" class="file-upload-text"></span>
+        </div>
+        <div class="upload-section">
+            <label for="validacion_identidad">6. Validación de identidad:</label>
+            <input type="file" id="validacion_identidad" class="d-none" accept=".pdf, .png, .jpg, .jpeg">
+            <label class="btn btn-primary" for="validacion_identidad">Seleccionar archivo</label>
+            <span id="validacion_identidad-filename" class="file-upload-text"></span>
+        </div>
+        <div class="upload-section">
+            <label for="captura_gsma">7. Captura GSMA:</label>
+            <input type="file" id="captura_gsma" class="d-none" accept=".pdf, .png, .jpg, .jpeg">
+            <label class="btn btn-primary" for="captura_gsma">Seleccionar archivo</label>
+            <span id="captura_gsma-filename" class="file-upload-text"></span>
+        </div>
+
+        <button type="button" id="exportar_pdf" class="btn btn-success">Exportar PDF</button>
+        <div id="mensaje_exportacion"></div>
+    </div>
+
+    <script src="../js/generador_pdf.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fileInputs = document.querySelectorAll('.upload-section input[type="file"]');
+
+            fileInputs.forEach(input => {
+                const filenameDisplay = document.getElementById(input.id + '-filename');
+
+                input.addEventListener('change', () => {
+                    if (input.files.length > 0) {
+                        filenameDisplay.textContent = input.files[0].name;
+                    } else {
+                        filenameDisplay.textContent = '';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

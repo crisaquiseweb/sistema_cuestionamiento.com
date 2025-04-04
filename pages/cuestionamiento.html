@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUESTIONAMIENTO</title>
+
+
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: transparent;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            color: #007bff;
+            margin-top: 0;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+            color: black;
+            margin-top: -10px;
+        }
+
+        .section-title {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            color: #495057;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .section-title:nth-child(3) {
+            background-color: #6d9eeb;
+            color: black;
+        }
+        .section-title:nth-child(6), .section-title:nth-child(9) {
+            background-color: #a4c2f4;
+            color: black;
+            font-size: 12px;
+        }
+        .section-title:nth-child(18) {
+            background-color: #6d9eeb;
+            color: black;
+        }
+        .section-title:nth-child(29) {
+            background-color: #6d9eeb;
+            color: black;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .form-group label {
+            flex-basis: 30%;
+            margin-right: 10px;
+            text-align: left;
+            font-weight: bold;
+            color: #343a40;
+            font-size: 0.9em;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="number"],
+        .form-group select,
+        .form-group textarea {
+            flex-basis: 65%;
+            padding: 5px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 0.9em;
+        }
+        .form-group input#domicilio {
+            margin-left: -168px;
+        }
+        .form-group.inline-fields > div input[type="text"] {
+            max-width: 155px;
+        }
+
+        .form-group input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        .form-group .radio-group label {
+            font-weight: normal;
+            margin-right: 15px;
+        }
+
+        .form-group .checkbox-group label {
+            font-weight: normal;
+            margin-right: 15px;
+        }
+
+        .form-group.inline-fields > div {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+
+        .form-group.inline-fields > div label {
+            margin-right: 5px;
+            flex-basis: auto;
+        }
+
+        .form-group.inline-fields > div input[type="radio"] {
+            flex-basis: auto;
+        }
+
+        .button-container {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .export-button {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .export-button:hover {
+            background-color: #218838;
+        }
+
+        .clear-button {
+            background-color: #dc3545;
+            color: white;
+            margin-left: 10px;
+        }
+
+        .clear-button:hover {
+            background-color: #c82333;
+        }
+
+        .signature-line {
+            border-top: 1px solid #000;
+            margin-top: 30px;
+            padding-top: 5px;
+            text-align: center;
+        }
+
+        .full-width {
+            width: 100%;
+        }
+
+        .half-width {
+            flex-basis: 48%;
+        }
+
+        .third-width {
+            flex-basis: 30%;
+        }
+
+        .two-thirds-width {
+            flex-basis: 65%;
+        }
+
+        .observation-area {
+            flex-basis: 100%;
+        }
+
+        /* Styles for PDF export (print) */
+        @media print {
+            body {
+                margin: 0;
+                padding: 5mm; /* Standard A4 margins */
+                background-color: #fff !important;
+                -webkit-print-color-adjust: exact;
+                font-size: 10pt; /* Standard font size for print */
+            }
+            .container {
+                box-shadow: none !important;
+                border: none !important;
+                max-width: 100%;
+                padding: 0; /* Remove container padding for print */
+                border-radius: 0 !important; /* Remove container border radius */
+            }
+            h2 {
+                font-size: 1.5em;
+                margin-bottom: 8px;
+                border-bottom: none !important; /* Remove heading bottom border */
+                color: #000 !important; /* Ensure black color for print */
+                text-align: center; /* Keep heading centered in print */
+            }
+            .section-title {
+                font-size: 0.9em;
+                padding: 6px;
+                margin-bottom: 6px;
+                background-color: #e9ecef !important; /* Keep background for section titles */
+                border-radius: 0 !important; /* Remove section title border radius */
+                color: #495057 !important;
+            }
+            .form-group {
+                margin-bottom: 8px;
+                display: block;
+            }
+            .form-group label {
+                display: block;
+                margin-bottom: 2px;
+                font-size: 0.8em;
+                color: #000 !important; /* Ensure black color for labels */
+                font-weight: bold; /* Keep labels bold in print */
+            }
+            .form-group input[type="text"],
+            .form-group input[type="email"],
+            .form-group input[type="number"],
+            .form-group select,
+            .form-group textarea {
+                display: none !important; /* Hide input fields */
+            }
+            .form-group.inline-fields > div {
+                display: inline-block;
+                margin-right: 10px;
+                text-align: left;
+            }
+            .form-group.inline-fields > div label {
+                text-align: left;
+                display: inline-block;
+                width: auto;
+            }
+            .button-container {
+                display: none !important;
+            }
+            .export-button {
+                display: none !important;
+            }
+            .clear-button {
+                display: none !important;
+            }
+            .signature-line {
+                margin-top: 20px;
+                border-top: 1px solid #000; /* Keep signature line */
+            }
+            p {
+                color: #000 !important; /* Ensure paragraph text is black */
+                font-size: 0.9em;
+                margin-top: 0;
+            }
+            .print-value {
+                display: block;
+                width: 100%;
+                padding: 4px 0;
+                font-size: 0.8em;
+                margin-bottom: 4px;
+                border-bottom: 1px solid #ccc; /* Add the underline */
+            }
+            .form-group.inline-fields > div .print-value {
+                display: inline-block;
+                width: auto;
+                border-bottom: 1px solid #ccc;
+                padding-right: 5px;
+                margin-right: 5px;
+            }
+            .form-group.inline-fields > div > label {
+                display: inline-block;
+                margin-right: 5px;
+                font-weight: bold;
+            }
+        }
+    </style>
+</head>
+<body>
+     
+    <div class="container">
+        <h2 style="text-align: center; color: black;margin-top: -10px;">SOLICITUD DE CUESTIONAMIENTO</h2>
+        <p style="font-size: 0.9em; color: red; font-style: italic;">* Información obligatoria</p>
+
+        <div class="section-title"style="font-size: 12px; background-color:#6d9eeb; color: black;">1. DATOS GENERALES:</div>
+
+        <div class="section-title"style="background-color:#a4c2f4; color: black;font-size: 12px">DATOS DEL ABONADO:</div>
+        <div class="form-group full-width">
+            <label for="abonado_nombre">Nombre y Apellidos del abonado *:</label>
+            <input type="text" id="abonado_nombre" required>
+           
+        </div>
+        <div class="form-group inline-fields full-width">
+            <div>
+                <label>Tipo de Documento de Identidad *:</label>
+            </div>
+            <div>
+                <input type="radio" id="dni_abonado" name="tipo_doc_abonado" value="DNI" required>
+                <label for="dni_abonado">DNI</label>
+              
+            </div>
+            <div>
+                <input type="radio" id="ce_abonado" name="tipo_doc_abonado" value="CE">
+                <label for="ce_abonado">CE</label>
+                
+            </div>
+            <div>
+                <input type="radio" id="pasaporte_abonado" name="tipo_doc_abonado" value="PASAPORTE">
+                <label for="pasaporte_abonado">PASAPORTE</label>
+                
+            </div>
+            <div>
+                <input type="radio" id="ruc_abonado" name="tipo_doc_abonado" value="RUC">
+                <label for="ruc_abonado">RUC</label>
+                
+            </div>
+        </div>
+        <div class="form-group full-width">
+            <label for="abonado_nro_doc">N° de Documento *:</label>
+            <input type="text" id="abonado_nro_doc" required>
+           
+        </div>
+
+
+        <div class="section-title"style="background-color:
+#a4c2f4; color: black;font-size: 12px">DATOS PARA LA NOTIFICACIÓN Y CONTACTO</div>
+        <div class="form-group full-width">
+            <label for="domicilio">Domicilio *:</label>
+            <input type="text" id="domicilio" required style="margin-left: -168px;">
+            
+        </div>
+        <div class="form-group inline-fields full-width">
+            <div class="third-width">
+                <label for="distrito">Distrito:</label>
+                <input type="text" id="distrito"style="max-width: 155px;">
+                
+            </div>
+            <div class="third-width">
+                <label for="provincia">Provincia:</label>
+                <input type="text" id="provincia" style="max-width: 155px;">
+                
+            </div>
+            <div class="third-width">
+                <label for="departamento">Departamento:</label>
+                <input type="text" id="departamento"style="max-width: 155px;">
+                
+            </div>
+        </div>
+        <div class="form-group full-width">
+            <label for="correo_electronico">Correo Electrónico para recibir notificación:</label>
+            <input type="email" id="correo_electronico">
+            
+        </div>
+        <div class="form-group full-width">
+            <label for="numero_contacto">Número de Contacto:</label>
+            <input type="number" id="numero_contacto">
+           
+        </div>
+
+        <div class="section-title"style="font-size: 12px; background-color:
+#6d9eeb; color: black;">2. DATOS DEL CUESTIONAMIENTO</div>
+        <div class="form-group full-width">
+            <label>Motivo del bloqueo del equipo terminal móvil *:</label>
+            <div class="radio-group">
+                <input type="radio" id="sustraccion" name="motivo_bloqueo" value="Sustraccion o perdida" required>
+                <label for="sustraccion">Sustracción o pérdida</label>
+                <input type="radio" id="deteccion_imei" name="motivo_bloqueo" value="Deteccion de IMEI Clonado">
+                <label for="deteccion_imei">Detección de IMEI Clonado</label>
+                <input type="radio" id="imei_invalido" name="motivo_bloqueo" value="Deteccion de IMEI Invalido">
+                <label for="imei_invalido">Detección de IMEI Inválido</label>
+                <input type="radio" id="otro_motivo" name="motivo_bloqueo" value="Otro">
+                <label for="otro_motivo">Otro (Indicar)</label>
+                <input type="text" id="otro_motivo_especificar" style="display: none; margin-left: 10px;" placeholder="Especificar">
+                <div class="print-value" id="print_motivo_bloqueo"></div>
+            </div>
+        </div>
+        <div class="form-group inline-fields full-width">
+            <div class="half-width">
+                <label for="marca">Marca:</label>
+                <input type="text" id="marca">
+              
+            </div>
+            <div class="half-width">
+                <label for="modelo">Modelo:</label>
+                <input type="text" id="modelo">
+               
+            </div>
+        </div>
+        <div class="form-group inline-fields full-width">
+            <div class="half-width">
+                <label for="imei_logico">IMEI Lógico:</label>
+                <input type="text" id="imei_logico">
+               
+            </div>
+            <div class="half-width">
+                <label for="imei_fisico">IMEI Físico *:</label>
+                <input type="text" id="imei_fisico" required>
+               
+            </div>
+        </div>
+        <div class="form-group full-width">
+            <label for="numero_servicio">Número de servicio móvil utilizado con el equipo *:</label>
+            <input type="text" id="numero_servicio" required>
+          
+        </div>
+        <div class="form-group full-width">
+            <label>Equipo Adquirido en Empresa Operadora *:</label>
+            <div class="radio-group">
+                <input type="radio" id="no_adquirido" name="equipo_adquirido" value="NO" required>
+                <label for="no_adquirido">NO</label>
+                <input type="radio" id="si_adquirido" name="equipo_adquirido" value="SI">
+                <label for="si_adquirido">SI</label>
+                <label for="empresa_operadora" style="margin-left: 20px;">De Marcar SI, Indicar la Empresa operadora:</label>
+                <input type="text" id="empresa_operadora" style="margin-left: 5px; display: none;">
+               
+            </div>
+        </div>
+        <div class="form-group full-width">
+            <label for="observaciones">Observaciones del abonado (adquisición en otro lugar, si fue comprado a otra persona, algún detalle que considere relevante):</label>
+            <textarea id="observaciones" rows="3" class="observation-area"></textarea>
+            <div class="print-value" id="print_observaciones" style="border-bottom: none; white-space: pre-wrap;"></div>
+        </div>
+
+        <div class="section-title"style="font-size: 12px; background-color:
+#6d9eeb; color: black;">3. RESULTADO</div>
+        <div class="form-group full-width">
+            <label>Empresa Operadora declara PROCEDENTE:</label>
+            <div class="radio-group">
+                <input type="radio" id="procedente_no" name="resultado_procedente" value="NO">
+                <label for="procedente_no">NO</label>
+                <input type="radio" id="procedente_si" name="resultado_procedente" value="SI">
+                <label for="procedente_si">SI</label>
+           
+            </div>
+        </div>
+        <div class="form-group full-width">
+            <label for="codigo_desbloqueo" style="font-style: italic;">En caso PROCEDE Código de desbloqueo / habilitación:</label>
+            <input type="text" id="codigo_desbloqueo">
+           
+        </div>
+        <div class="form-group full-width">
+            <label for="sustento_no_procede" style="font-style: italic;">Detallar sustento por el cual el cuestionamiento NO PROCEDE:</label>
+            <textarea id="sustento_no_procede" rows="2" class="observation-area" placeholder="Llenar solo cuando la empresa operadora ha determinado que el cuestionamiento NO PROCEDE" disabled></textarea>
+            <div class="print-value" id="print_sustento_no_procede" style="border-bottom: none; white-space: pre-wrap;"></div>
+        </div>
+        <div class="form-group full-width">
+            <label>El abonado requiere se eleve su cuestionamiento para revisión del OSIPTEL:</label>
+            <div class="radio-group">
+                <input type="radio" id="osiptel_no" name="revision_osiptel" value="NO">
+                <label for="osiptel_no">NO</label>
+                <input type="radio" id="osiptel_si" name="revision_osiptel" value="SI">
+                <label for="osiptel_si">SI</label>
+               
+            </div>
+        </div>
+        <div class="form-group full-width">
+            <label for="codigo_derivacion">Código de derivación del caso al OSIPTEL:</label>
+            <input type="text" id="codigo_derivacion">
+            
+        </div>
+        <div class="form-group full-width">
+            <p style="font-size: 0.9em; margin-top: -10px;">El abonado declara que en caso de brindar información falsa se somete a las responsabilidades administrativas, civiles y o penales correspondientes.</p>
+            <p class="print-value" style="border-bottom: none;"></p>
+        </div>
+        <div class="form-group full-width">
+            <label for="fecha_recepcion" style="margin-top: -28px; font-style: initial;">Fecha de recepción del cuestionamiento:</label>
+            <input type="date" id="fecha_recepcion" style="margin-top: -28px;border: none;">
+            
+        </div>
+
+         <div style="display: flex; justify-content: space-between; margin-top: 50px; margin-left: 100px;">
+            <div style="text-align: center;">
+                <div class="signature-line"></div>
+                <label>Sello y Firma del Asesor</label>
+                <p class="print-value" style="border-bottom: none; margin-top: 10px;">(Espacio para Sello y Firma)</p>
+            </div>
+            <div style="text-align:center; margin-right: 100px; ">
+                <div class="signature-line"></div>
+                <label>Firma del Abonado</label>
+                <p class="print-value" style="border-bottom: none; margin-top: 10px;">(Espacio para Firma)</p>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button class="button export-button" onclick="exportToPDF()">EXPORTAR PDF</button>
+        </div>
+    </div>
+
+
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+
+<script>
+      
+      
+
+        // Existing script for handling form elements
+        document.addEventListener('DOMContentLoaded', function() {
+            const otroMotivoRadio = document.getElementById('otro_motivo');
+            const otroMotivoEspecificarInput = document.getElementById('otro_motivo_especificar');
+
+            otroMotivoRadio.addEventListener('change', function() {
+                otroMotivoEspecificarInput.style.display = this.checked ? 'inline-block' : 'none';
+                if (!this.checked) {
+                    otroMotivoEspecificarInput.value = '';
+                }
+            });
+
+            const siAdquiridoRadio = document.getElementById('si_adquirido');
+            const empresaOperadoraInput = document.getElementById('empresa_operadora');
+
+            siAdquiridoRadio.addEventListener('change', function() {
+                empresaOperadoraInput.style.display = this.checked ? 'inline-block' : 'none';
+                if (!this.checked) {
+                    empresaOperadoraInput.value = '';
+                }
+            });
+
+            const procedenteNoRadio = document.getElementById('procedente_no');
+            const sustentoNoProcedeTextarea = document.getElementById('sustento_no_procede');
+
+            procedenteNoRadio.addEventListener('change', function() {
+                sustentoNoProcedeTextarea.disabled = !this.checked;
+                if (!this.checked) {
+                    sustentoNoProcedeTextarea.value = '';
+                } else {
+                    sustentoNoProcedeTextarea.focus();
+                }
+            });
+        });
+
+
+
+</script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const otroMotivoRadio = document.getElementById('otro_motivo');
+            const otroMotivoEspecificarInput = document.getElementById('otro_motivo_especificar');
+
+            otroMotivoRadio.addEventListener('change', function() {
+                otroMotivoEspecificarInput.style.display = this.checked ? 'inline-block' : 'none';
+                if (!this.checked) {
+                    otroMotivoEspecificarInput.value = '';
+                }
+            });
+
+            const siAdquiridoRadio = document.getElementById('si_adquirido');
+            const empresaOperadoraInput = document.getElementById('empresa_operadora');
+
+            siAdquiridoRadio.addEventListener('change', function() {
+                empresaOperadoraInput.style.display = this.checked ? 'inline-block' : 'none';
+                if (!this.checked) {
+                    empresaOperadoraInput.value = '';
+                }
+            });
+
+            const procedenteNoRadio = document.getElementById('procedente_no');
+            const sustentoNoProcedeTextarea = document.getElementById('sustento_no_procede');
+
+            procedenteNoRadio.addEventListener('change', function() {
+                sustentoNoProcedeTextarea.disabled = !this.checked;
+                if (!this.checked) {
+                    sustentoNoProcedeTextarea.value = '';
+                } else {
+                    sustentoNoProcedeTextarea.focus();
+                }
+            });
+        });
+
+        function exportToPDF() {
+            // Populate print values before exporting
+            document.querySelectorAll('.form-group input[type="text"], .form-group input[type="email"], .form-group input[type="number"], .form-group select, .form-group textarea').forEach(input => {
+                const printElementId = `print_${input.id}`;
+                const printElement = document.getElementById(printElementId);
+                if (printElement) {
+                    printElement.textContent = input.value;
+                }
+            });
+
+            document.querySelectorAll('.form-group input[type="radio"]').forEach(radio => {
+                const printElementId = `print_${radio.id}`;
+                const printElement = document.getElementById(printElementId);
+                if (printElement && radio.checked) {
+                    const label = document.querySelector(`label[for="${radio.id}"]`);
+                    printElement.textContent = label ? label.textContent : radio.value;
+                } else if (printElement) {
+                    printElement.textContent = ''; // Clear if not checked
+                }
+            });
+
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const container = document.querySelector('.container');
+
+            // Hide buttons for PDF
+            const buttonContainer = document.querySelector('.button-container');
+            if (buttonContainer) {
+                buttonContainer.style.display = 'none';
+            }
+
+            html2canvas(container, {
+                scale: 2, // Increase scale for better resolution
+                backgroundColor: 'white'
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+                const canvasWidth = canvas.width;
+                const canvasHeight = canvas.height;
+
+                let widthRatio = pdfWidth / canvasWidth;
+                let heightRatio = pdfHeight / canvasHeight;
+                let scaleFactor = Math.min(widthRatio, heightRatio);
+
+                let imgWidth = canvasWidth * scaleFactor;
+                let imgHeight = canvasHeight * scaleFactor;
+
+                let xPosition = (pdfWidth - imgWidth) / 2;
+                let yPosition = 10; // Add some top margin
+
+                pdf.addImage(imgData, 'PNG', xPosition, yPosition, imgWidth, imgHeight);
+
+                // Restore button visibility after PDF generation (before saving)
+                if (buttonContainer) {
+                    buttonContainer.style.display = 'block';
+                }
+
+                pdf.save('Cuestionamiento_Entel.pdf');
+            });
+        }
+
+        function clearForm() {
+            const formElements = document.querySelectorAll('.container input[type="text"], .container input[type="email"], .container input[type="number"], .container select, .container textarea');
+            formElements.forEach(element => {
+                element.value = '';
+            });
+            const radioButtons = document.querySelectorAll('.container input[type="radio"]');
+            radioButtons.forEach(element => {
+                element.checked = false;
+            });
+            const otroMotivoEspecificar = document.getElementById('otro_motivo_especificar');
+            if (otroMotivoEspecificar) {
+                otroMotivoEspecificar.style.display = 'none';
+            }
+            const empresaOperadoraInput = document.getElementById('empresa_operadora');
+            if (empresaOperadoraInput) {
+                empresaOperadoraInput.style.display = 'none';
+            }
+            const sustentoNoProcedeTextarea = document.getElementById('sustento_no_procede');
+            if (sustentoNoProcedeTextarea) {
+                sustentoNoProcedeTextarea.disabled = true;
+            }
+        }
+    </script>
+</body>
+</html>

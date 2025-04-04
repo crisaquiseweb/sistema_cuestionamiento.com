@@ -1,0 +1,324 @@
+/*
+ * =============================================================================
+ * CSS para Generador de Reporte de IMEI (Diseño Avanzado y Ordenado)
+ * =============================================================================
+ */
+
+/*
+ * -----------------------------------------------------------------------------
+ * 1. Variables CSS (Custom Properties)
+ * -----------------------------------------------------------------------------
+ */
+
+:root {
+    --primary-color: #1877f2; /* Azul principal */
+    --secondary-color: #28a745; /* Verde secundario */
+    --text-color-primary: #333;
+    --text-color-secondary: #555;
+    --background-color-body: #f0f2f5;
+    --background-color-container: #fff;
+    --border-color: #ccc;
+    --border-radius: 5px;
+    --box-shadow-light: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --font-family-base: sans-serif;
+}
+
+/* Convertir colores primarios y secundarios a RGB */
+:root {
+    --primary-color-rgb: 24, 119, 242;
+    --secondary-color-rgb: 40, 167, 69;
+}
+
+/*
+ * -----------------------------------------------------------------------------
+ * 2. Reset y Estilos Globales
+ * -----------------------------------------------------------------------------
+ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family-base);
+    background-color: var(--background-color-body);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+/*
+ * -----------------------------------------------------------------------------
+ * 3. Contenedor Principal
+ * -----------------------------------------------------------------------------
+ */
+
+.pdf-generator-container {
+    background-color: #FFF;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -390px;
+    padding-top: 30px;
+}
+
+/*
+ * -----------------------------------------------------------------------------
+ * 4. Título Principal
+ * -----------------------------------------------------------------------------
+ */
+
+.pdf-generator-container h2 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    font-size: 2.2em;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.pdf-generator-container h2::before {
+    content: "REGISTRO DE CONSOLIDADO";
+    display: block;
+}
+.pdf-generator-container h2 {
+    text-indent: -9999px;
+    overflow: hidden;
+    height: auto;
+}
+
+/*
+ * -----------------------------------------------------------------------------
+ * 5. Formulario: Contenedores de Filas
+ * -----------------------------------------------------------------------------
+ */
+
+.form-row {
+    margin-bottom: 20px;
+}
+
+/*
+ * -----------------------------------------------------------------------------
+ * 6. Formulario: Etiquetas (Labels)
+ * -----------------------------------------------------------------------------
+ */
+
+.form-row label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text-color-primary);
+    font-weight: bold;
+    text-align: left;
+}
+
+/*
+ * -----------------------------------------------------------------------------
+ * 7. Formulario: Campos de Texto (Inputs) y Select
+ * -----------------------------------------------------------------------------
+ */
+
+.form-row input[type="text"],
+.form-row select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.form-row input[type="text"]:focus,
+.form-row select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 5px rgba(var(--primary-color-rgb), 0.3);
+}
+
+/* Estilos específicos para el selector (Select) */
+.form-row select {
+    appearance: none;
+    background-color: var(--background-color-container);
+    background-image: url('data:image/svg+xml;utf8,<svg fill="currentColor" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    background-size: 16px;
+}
+
+/*
+ * -----------------------------------------------------------------------------
+ * 8. Subir Archivos: Título
+ * -----------------------------------------------------------------------------
+ */
+
+.pdf-generator-container h3 {
+    text-align: left;
+    color: var(--text-color-primary);
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+/*
+ * -----------------------------------------------------------------------------
+ * 9. Subir Archivos: Secciones Individuales (con Botones de Bootstrap)
+ * -----------------------------------------------------------------------------
+ */
+
+.upload-section {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #fff;
+    display: flex; /* Para alinear la etiqueta y el botón en la misma fila */
+    align-items: center; /* Alinear verticalmente */
+    gap: 15px; /* Espacio entre la etiqueta y el botón */
+}
+
+.upload-section > label:first-child { /* Estilo para la etiqueta descriptiva */
+    display: block;
+    margin-bottom: 0; /* Eliminar el margen inferior */
+    font-weight: normal;
+    color: #333;
+    flex-basis: 40%; /* Ancho de la etiqueta descriptiva */
+    text-align: left;
+}
+
+.upload-section > label.btn { /* Estilo para la etiqueta que actúa como botón */
+    margin-bottom: 0; /* Eliminar el margen inferior */
+}
+
+.file-upload-text {
+    display: inline-block;
+    margin-left: 10px;
+    font-style: italic;
+    color: #777;
+    flex-grow: 1; /* Ocupar el espacio restante */
+    text-align: left;
+}
+
+/*
+ * -----------------------------------------------------------------------------
+ * 10. Estilos para el botón de selección de archivo (::file-selector-button)
+ * -----------------------------------------------------------------------------
+ */
+
+input::file-selector-button {
+    background-image: linear-gradient(
+        to right,
+        #ff7a18,
+        #af002d,
+        #319197 100%,
+        #319197 200%
+    );
+    background-position-x: 0%;
+    background-size: 200%;
+    border: 0;
+    border-radius: 8px;
+    color: #fff;
+    padding: 1rem 1.25rem;
+    text-shadow: 0 1px 1px #333;
+    transition: all 0.25s;
+}
+
+input::file-selector-button:hover {
+    background-position-x: 100%;
+    transform: scale(1.1);
+}
+
+/*
+ * -----------------------------------------------------------------------------
+ * 11. Botón de Exportar PDF
+ * -----------------------------------------------------------------------------
+ */
+
+#exportar_pdf {
+    display: block;
+    padding: 12px 20px;
+    background-color: var(--secondary-color);
+    color: #fff;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    box-shadow: var(--box-shadow-light);
+    margin-top: 20px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#exportar_pdf:hover {
+    background-color: #1e7e34;
+}
+
+#exportar_pdf:focus {
+    outline: none;
+    box-shadow: 0 0 7px rgba(var(--secondary-color-rgb), 0.5);
+}
+
+/*
+ * -----------------------------------------------------------------------------
+ * 12. Mensaje de Exportación
+ * -----------------------------------------------------------------------------
+ */
+
+#mensaje_exportacion {
+    margin-top: 20px;
+    text-align: center;
+    color: var(--secondary-color);
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/*
+ * -----------------------------------------------------------------------------
+ * 13. Media Queries (Responsive Design)
+ * -----------------------------------------------------------------------------
+ */
+
+@media (max-width: 768px) {
+    .pdf-generator-container {
+        padding: 20px;
+    }
+
+    .pdf-generator-container h2 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+    }
+
+    .upload-section {
+        flex-direction: column; /* Vuelve a vertical en pantallas pequeñas */
+        align-items: flex-start; /* Alinear a la izquierda en pantallas pequeñas */
+        gap: 10px;
+    }
+
+    .upload-section > label:first-child {
+        flex-basis: auto;
+        text-align: left;
+    }
+
+    #exportar_pdf {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .file-upload-text {
+        text-align: left;
+        margin-left: 0;
+    }
+}
