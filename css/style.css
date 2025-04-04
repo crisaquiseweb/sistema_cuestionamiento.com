@@ -90,7 +90,7 @@ body {
 }
 
 header {
-    background-color: #1d1f22;
+    background-color: #0d45a1;
     color: white;
     padding: 10px 15px; /* Reducir el padding */
     display: flex;
@@ -132,15 +132,18 @@ header nav ul li a {
     text-decoration: none;
     padding: 8px 10px; /* Reducir el padding */
     border-radius: 6px;
-    transition: background-color 0.3s ease;
+    transition: background-image 0.3s ease, transform 0.2s ease-in-out; /* Añadir transición para el degradado y la transformación */
     font-weight: normal; /* Usar normal en lugar de unset para evitar sorpresas */
     font-size: 0.9em; /* Reducir el tamaño de la fuente */
+    background-size: 200% auto; /* Para la animación del degradado */
+    background-position: 0% center; /* Posición inicial del degradado */
 }
 
 header nav ul li a:hover {
-    background-color: #e2780e;
+    background-image: linear-gradient(to right, #b8b00c, #56a20e); /* Degradado amarillo al hacer hover */
+    background-position: 100% center; /* Mueve el degradado para la animación */
+    transform: scale(1.05); /* Ligeramente más grande al hacer hover */
 }
-
 header nav ul li:hover a {
     color: white;
 }
@@ -153,7 +156,7 @@ main {
 }
 
 .dashboard-info {
-    background-color: #1d1f22;
+    background-color: #0d45a1;
     padding: 15px; /* Reducir el padding */
     border-radius: 8px;
     height: 100px;
@@ -188,7 +191,7 @@ main {
 }
 
 footer {
-    background-color: #1d1f22;
+    background-color: #0d45a1;
     color: white;
     text-align: center;
     padding: 8px; /* Reducir el padding */
@@ -225,7 +228,8 @@ footer {
 }
 
 .user-info button:hover {
-    background-color: #67085d;
+    background-color: #bd2608;
+
 }
 
 /* Estilos para el chat box */
