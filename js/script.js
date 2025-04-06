@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const date = now.toLocaleDateString();
                     botReply = `La fecha actual es: ${date}`;
                 } else {
-                    botReply = 'Gracias por tu mensaje.';
+                    botReply = 'No puedo Traducir lo que me escribiste.. mi creador esta en Desarrollo';
                 }
 
                 setTimeout(() => {

@@ -190,7 +190,7 @@
                 padding: 5mm; /* Standard A4 margins */
                 background-color: #fff !important;
                 -webkit-print-color-adjust: exact;
-                font-size: 10pt; /* Standard font size for print */
+                font-size: 13pt; /* Standard font size for print */
             }
             .container {
                 box-shadow: none !important;
@@ -287,59 +287,59 @@
      
     <div class="container">
         <h2 style="text-align: center; color: black;margin-top: -10px;">SOLICITUD DE CUESTIONAMIENTO</h2>
-        <p style="font-size: 0.9em; color: red; font-style: italic;">* Información obligatoria</p>
+        <p style="font-size: 0.9em; color: red; font-style: italic;margin-top: -10px;">* Información obligatoria</p>
 
-        <div class="section-title"style="font-size: 12px; background-color:#6d9eeb; color: black;">1. DATOS GENERALES:</div>
+        <div class="section-title"style="font-size: 12px; background-color:#6d9eeb; color: black;margin-top: -10px;">1. DATOS GENERALES:</div>
 
-        <div class="section-title"style="background-color:#a4c2f4; color: black;font-size: 12px">DATOS DEL ABONADO:</div>
+        <div class="section-title"style="background-color:#a4c2f4; color: black;font-size: 12px;margin-top: -8px;">DATOS DEL ABONADO:</div>
         <div class="form-group full-width">
-            <label for="abonado_nombre">Nombre y Apellidos del abonado *:</label>
-            <input type="text" id="abonado_nombre" required>
+            <label for="abonado_nombre" style="margin-top: -8px;">Nombre y Apellidos del abonado *:</label>
+            <input type="text" id="abonado_nombre" required style="margin-top: -8px;">
            
         </div>
         <div class="form-group inline-fields full-width">
             <div>
-                <label>Tipo de Documento de Identidad *:</label>
+                <label style="margin-top: -8px;">Tipo de Documento de Identidad *:</label>
             </div>
             <div>
-                <input type="radio" id="dni_abonado" name="tipo_doc_abonado" value="DNI" required>
-                <label for="dni_abonado">DNI</label>
+                <input type="radio" id="dni_abonado" name="tipo_doc_abonado" value="DNI" style="margin-top: -8px;">
+                <label for="dni_abonado"style="margin-top: -8px;">DNI</label>
               
             </div>
             <div>
-                <input type="radio" id="ce_abonado" name="tipo_doc_abonado" value="CE">
-                <label for="ce_abonado">CE</label>
+                <input type="radio" id="ce_abonado" name="tipo_doc_abonado" value="CE"style="margin-top: -8px;">
+                <label for="ce_abonado"style="margin-top: -8px;">CE</label>
                 
             </div>
             <div>
-                <input type="radio" id="pasaporte_abonado" name="tipo_doc_abonado" value="PASAPORTE">
-                <label for="pasaporte_abonado">PASAPORTE</label>
+                <input type="radio" id="pasaporte_abonado" name="tipo_doc_abonado" value="PASAPORTE"style="margin-top: -8px;">
+                <label for="pasaporte_abonado"style="margin-top: -8px;">PASAPORTE</label>
                 
             </div>
             <div>
-                <input type="radio" id="ruc_abonado" name="tipo_doc_abonado" value="RUC">
-                <label for="ruc_abonado">RUC</label>
+                <input type="radio" id="ruc_abonado" name="tipo_doc_abonado" value="RUC"style="margin-top: -8px;">
+                <label for="ruc_abonado"style="margin-top: -8px;">RUC</label>
                 
             </div>
         </div>
         <div class="form-group full-width">
-            <label for="abonado_nro_doc">N° de Documento *:</label>
-            <input type="text" id="abonado_nro_doc" required>
+            <label for="abonado_nro_doc" style="margin-top: -8px;">N° de Documento *:</label>
+            <input type="text" id="abonado_nro_doc" required style="margin-top: -8px;">
            
         </div>
 
 
         <div class="section-title"style="background-color:
-#a4c2f4; color: black;font-size: 12px">DATOS PARA LA NOTIFICACIÓN Y CONTACTO</div>
+#a4c2f4; color: black;font-size: 12px;margin-top: -8px;">DATOS PARA LA NOTIFICACIÓN Y CONTACTO</div>
         <div class="form-group full-width">
-            <label for="domicilio">Domicilio *:</label>
-            <input type="text" id="domicilio" required style="margin-left: -168px;">
+            <label for="domicilio"style="margin-top: -8px;">Domicilio *:</label>
+            <input type="text" id="domicilio" required style="margin-left: -168px;margin-top: -8px;">
             
         </div>
         <div class="form-group inline-fields full-width">
             <div class="third-width">
-                <label for="distrito">Distrito:</label>
-                <input type="text" id="distrito"style="max-width: 155px;">
+                <label for="distrito"style="margin-top: -8px;">Distrito:</label>
+                <input type="text" id="distrito"style="max-width: 155px;margin-top: -8px;">
                 
             </div>
             <div class="third-width">
@@ -365,20 +365,22 @@
         </div>
 
         <div class="section-title"style="font-size: 12px; background-color:
-#6d9eeb; color: black;">2. DATOS DEL CUESTIONAMIENTO</div>
+#6d9eeb; color: black;margin-top: -8px;">2. DATOS DEL CUESTIONAMIENTO</div>
         <div class="form-group full-width">
             <label>Motivo del bloqueo del equipo terminal móvil *:</label>
             <div class="radio-group">
                 <input type="radio" id="sustraccion" name="motivo_bloqueo" value="Sustraccion o perdida" required>
-                <label for="sustraccion">Sustracción o pérdida</label>
+                <label for="sustraccion">Sustraido o Pérdida</label>
                 <input type="radio" id="deteccion_imei" name="motivo_bloqueo" value="Deteccion de IMEI Clonado">
-                <label for="deteccion_imei">Detección de IMEI Clonado</label>
+                <label for="deteccion_imei">IMEI Clonado</label>
                 <input type="radio" id="imei_invalido" name="motivo_bloqueo" value="Deteccion de IMEI Invalido">
-                <label for="imei_invalido">Detección de IMEI Inválido</label>
+                <label for="imei_invalido">IMEI Inválido</label>
                 <input type="radio" id="otro_motivo" name="motivo_bloqueo" value="Otro">
                 <label for="otro_motivo">Otro (Indicar)</label>
-                <input type="text" id="otro_motivo_especificar" style="display: none; margin-left: 10px;" placeholder="Especificar">
-                <div class="print-value" id="print_motivo_bloqueo"></div>
+                <input type="text" id="otro_motivo_especificar" style="display: none; margin-left: 10px;" placeholder="INGRESA EL OPERADOR">
+                <div class="print-value" id="print_motivo_bloqueo">
+                    
+                </div>
             </div>
         </div>
         <div class="form-group inline-fields full-width">
@@ -425,11 +427,10 @@
         <div class="form-group full-width">
             <label for="observaciones">Observaciones del abonado (adquisición en otro lugar, si fue comprado a otra persona, algún detalle que considere relevante):</label>
             <textarea id="observaciones" rows="3" class="observation-area"></textarea>
-            <div class="print-value" id="print_observaciones" style="border-bottom: none; white-space: pre-wrap;"></div>
-        </div>
+                </div>
 
         <div class="section-title"style="font-size: 12px; background-color:
-#6d9eeb; color: black;">3. RESULTADO</div>
+#6d9eeb; color: black;margin-top: -8px;">3. RESULTADO</div>
         <div class="form-group full-width">
             <label>Empresa Operadora declara PROCEDENTE:</label>
             <div class="radio-group">
@@ -447,7 +448,7 @@
         </div>
         <div class="form-group full-width">
             <label for="sustento_no_procede" style="font-style: italic;">Detallar sustento por el cual el cuestionamiento NO PROCEDE:</label>
-            <textarea id="sustento_no_procede" rows="2" class="observation-area" placeholder="Llenar solo cuando la empresa operadora ha determinado que el cuestionamiento NO PROCEDE" disabled></textarea>
+            <textarea id="sustento_no_procede" rows="2" style=" font-family: 'Open Sans', sans-serif;" class="observation-area" placeholder="Llenar solo cuando la empresa operadora ha determinado que el cuestionamiento NO PROCEDE" disabled></textarea>
             <div class="print-value" id="print_sustento_no_procede" style="border-bottom: none; white-space: pre-wrap;"></div>
         </div>
         <div class="form-group full-width">
@@ -470,8 +471,15 @@
             <p class="print-value" style="border-bottom: none;"></p>
         </div>
         <div class="form-group full-width">
-            <label for="fecha_recepcion" style="margin-top: -28px; font-style: initial;">Fecha de recepción del cuestionamiento:</label>
-            <input type="date" id="fecha_recepcion" style="margin-top: -28px;border: none;">
+            <label for="fecha_recepcion" style="margin-top: -28px; font-style: initial;margin-top: -70px;">Fecha de recepción del cuestionamiento:</label>
+            <input type="date" id="fecha_recepcion" style="margin-top: -28px;border: none;margin-top: -70px; font-family: sans-serif;
+  color: black;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.1em;
+  font-size: 15px;
+  display: flex;
+  flex-direction: row-reverse;
+  ">
             
         </div>
 
@@ -479,12 +487,12 @@
             <div style="text-align: center;">
                 <div class="signature-line"></div>
                 <label>Sello y Firma del Asesor</label>
-                <p class="print-value" style="border-bottom: none; margin-top: 10px;">(Espacio para Sello y Firma)</p>
+                <p class="print-value" style="border-bottom: none; margin-top: 40px;color: white;">(Espacio para Sello y Firma)</p>
             </div>
             <div style="text-align:center; margin-right: 100px; ">
                 <div class="signature-line"></div>
                 <label>Firma del Abonado</label>
-                <p class="print-value" style="border-bottom: none; margin-top: 10px;">(Espacio para Firma)</p>
+                <p class="print-value" style="border-bottom: none; margin-top: 40px;color: white;">(Espacio para Firma)</p>
             </div>
         </div>
 
@@ -637,6 +645,7 @@
                 if (buttonContainer) {
                     buttonContainer.style.display = 'block';
                 }
+                
 
                 pdf.save('Cuestionamiento_Entel.pdf');
             });

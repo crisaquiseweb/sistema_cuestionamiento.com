@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     exportarPdfButton.addEventListener('click', async function() {
-        mensajeExportacionDiv.textContent = 'Generando PDF...';
+        mensajeExportacionDiv.textContent = 'Estamos Trabjando en Realizar tu PDF...';
         const nombreCliente = nombreClienteInput.value.trim();
         const tienda = tiendaInput?.value.trim() || '';
         if (!nombreCliente) {
@@ -99,6 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const mainTitleText = 'REPORTE DE IMEI CLONADO / DUPLICADO';
         const clientText = `NOMBRE DEL CLIENTE: ${nombreCliente}`;
         const tiendaText = `TIENDA: ${tienda}`;
+
 
         const mainTitleWidth = helveticaBoldFont.widthOfTextAtSize(mainTitleText, mainTitleFontSize);
         const clientTextWidth = helveticaFont.widthOfTextAtSize(clientText, subTitleFontSize);
@@ -158,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            mensajeExportacionDiv.textContent = 'PDF generado y descargado.';
+            mensajeExportacionDiv.textContent = 'Tu Archivo esta Listo y Descargado';
 
         } catch (error) {
             console.error('Error durante la generación del PDF:', error);
