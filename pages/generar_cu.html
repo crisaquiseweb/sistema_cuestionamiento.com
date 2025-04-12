@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Usuario Interactivo</title>
+    <style>
+        /* Estilos CSS optimizados para iframe */
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            background-color: transparent;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .fixed-title {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.5em;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .manual-container {
+            background-color: #f8f0e3; /* Color de fondo estilo libro (beige claro) */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            display: flex;
+            width: 95%;
+            max-width: 980px;
+            border-radius: 5px;
+            overflow: hidden;
+            min-height: 600px; /* Altura mínima adaptable a la pantalla */
+            
+         
+        }
+
+        .manual-pages {
+            flex-grow: 1;
+            display: flex;
+            transition: transform 0.3s ease-in-out;
+            overflow-y: auto; /* Añadir scroll vertical si el contenido excede la altura del contenedor */
+        }
+
+        .page {
+            flex-shrink: 0;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center; /* Centrar el texto en la página de finalización */
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        .page img {
+            max-width: 90%;
+            height: auto;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .page img.animate {
+            animation: slideIn 0.5s ease-out; /* Aplicar animación solo cuando la clase está presente */
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: center; /* Centrar los botones */
+            align-items: center; /* Centrar verticalmente (opcional) */
+            padding: 15px 0; /* Reducir el padding vertical */
+            background-color: transparent;
+            border-top: 1px solid #ddd;
+            width: 100%; /* Ocupar todo el ancho */
+            box-sizing: border-box;
+            gap: 40px; /* Espacio entre los botones */
+        }
+
+        .nav-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 15px 30px; /* Aumentar el padding para un tamaño llamativo */
+            border-radius: 8px; /* Bordes más redondeados */
+            cursor: pointer;
+            font-size: 18px; /* Aumentar el tamaño de la fuente */
+            transition: background-color 0.2s ease, transform 0.2s ease; /* Transición para el zoom */
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+        }
+
+        .nav-button:hover {
+            transform: scale(1.1); /* Efecto de zoom al pasar el ratón */
+            background-color: #0056b3;
+        }
+
+        .nav-button:active {
+            transform: scale(0.95); /* Efecto de "presionar" */
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Sombra ligeramente menor al presionar */
+        }
+
+        .restart-button {
+            background-color: #28a745; /* Color verde para reiniciar */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+
+        .restart-button:hover {
+            transform: scale(1.05);
+            background-color: #1e7e34;
+        }
+
+        /* Animaciones de página (sin cambios importantes aquí) */
+        .page-enter-active, .page-leave-active {
+            transition: all 0.3s ease;
+        }
+
+        .page-enter-from {
+            opacity: 0;
+            transform: translateX(50%);
+        }
+
+        .page-leave-to {
+            opacity: 0;
+            transform: translateX(-50%);
+        }
+
+        .page-enter-active.reverse, .page-leave-active.reverse {
+            transition: all 0.3s ease;
+        }
+
+        .page-enter-from.reverse {
+            opacity: 0;
+            transform: translateX(-50%);
+        }
+
+        .page-leave-to.reverse {
+            opacity: 0;
+            transform: translateX(50%);
+        }
+
+        /* Animación para las imágenes al cambiar de página */
+        @keyframes slideIn {
+            0% {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="fixed-title" style="margin-top: -10px;">GENERAR CONTRASEÑA UNICA RUC 20</h1>
+
+    <div class="manual-container" style="margin-top:-10px;">
+        <div class="manual-pages" id="manualPages">
+            <div class="page active" id="page1">
+                <h2 style="margin-top:10px;"> Paso 1: Ingresamos a Nuestro Usuario Activo</h2>
+                <img src="../img/cu1.jpg" alt="Imagen de introducción" >
+                <p style="font-weight: bolder;">Vamos a Ingresar a la Pagina de <a href="https://entel.insolutions.pe/entelid-portal/Account/Login?ReturnUrl=%2Fentelid-portal%2F%3FReturnUrl%3D%252FOperation" target="_blank">Web Insolution</a></p>
+            </div>
+            
+<div class="page active" id="page1">
+                <h2 style="margin-top:10px;"> Paso 2: Pagina Principal de la Web Insolution</h2>
+                <img src="../img/cu2.jpg" alt="Imagen de introducción" >
+                <p style="font-weight: bolder;">cuando estas en la pagina principal de tu usuario, Ingresa a Operaciones como muestra la Imagen</p>
+            </div>
+<div class="page active" id="page1">
+                <h2 style="margin-top:10px;"> Paso 3: Crear Cliente</h2>
+                <img src="../img/cu3.jpg" alt="Imagen de introducción" >
+                <p style="font-weight: bolder;">Precionamos en el Boton Nuevo, para poder Validar y/o crear un cliente, si el cliente es Nuevo Rellenar los campos de forma Ordenada, si el Cliente ya cuenta con CU, rellenar solo los Campos necesarios</p>
+            </div>
+<div class="page active" id="page1">
+                <h2 style="margin-top:10px;"> Paso 4: Aprobacion de Pedidos</h2>
+                <img src="../img/cu4.jpg" alt="Imagen de introducción" >
+                <p style="font-weight: bolder;">Al Generar un Nuevo formulario la Aprobacion y/o Creacion debe estar Siempre Seleccionado la Opcion del ( Creacion de CU y Aprobacion de pedidos)</p>
+            </div>
+
+            <div class="page active" id="page1">
+                <h2 style="margin-top:10px;"> Paso 5: Validaciones Importantes</h2>
+                <img src="../img/cu5.jpg" alt="Imagen de introducción" >
+                <p style="font-weight: bolder;">Las Validacion importantes y Necesarios son, El correo del cliente a la cual va Llegar para la aprobacion de su Pedido, el numero de Pedido o Numero de Orden, Correo Ejecutivo, siempre Considerar (equipo.evaluaciones@emeal.nttdata.com) es el correo de operacion que se encarga de validar el CU, Correo ejecutivo 2 es El correo del Asesor que Ingresa la Orden de Venta o Reposicion PARA FINALIZAR PRECIONAR EN CREAR Indica a tu cliente que le Llego un Link y que apruebe el Pedido</p>
+            </div>
+ 
+            <div class="page" id="completionPage">
+                <h2>¡FELICIDADES CAMPEON YA ERES UN CRACK!</h2>
+                <p>Has leído <span id="pagesRead"></span> páginas en un tiempo de <span id="manualDuration"></span>.</p>
+                <button class="restart-button" id="restartManual">No Te Quedo Claro Vuelve a Iniciar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation-buttons">
+        <button class="nav-button" id="prevPage">Anterior</button>
+        <button class="nav-button" id="nextPage">Siguiente</button>
+    </div>
+
+    <script>
+        const pages = document.querySelectorAll('.page');
+        const prevButton = document.getElementById('prevPage');
+        const nextButton = document.getElementById('nextPage');
+        const manualPagesContainer = document.getElementById('manualPages');
+        const completionPage = document.getElementById('completionPage');
+        const pagesReadSpan = document.getElementById('pagesRead');
+        const manualDurationSpan = document.getElementById('manualDuration');
+        const restartButton = document.getElementById('restartManual');
+
+        let currentPageIndex = 0;
+        let startTime;
+        let endTime;
+        let pagesRead = 0;
+
+        function showPage(index) {
+            pages.forEach((page, i) => {
+                page.classList.remove('active');
+                page.style.transform = ''; // Resetear la transformación
+                const img = page.querySelector('img');
+                if (img) {
+                    img.classList.remove('animate'); // Remover la clase de animación de la página anterior
+                }
+            });
+            if (pages[index]) {
+                pages[index].classList.add('active');
+                const img = pages[index].querySelector('img');
+                if (img) {
+                    img.classList.add('animate'); // Añadir la clase para animar la imagen de la nueva página
+                    // Remover la clase después de un breve tiempo para que la animación no se repita continuamente
+                    setTimeout(() => {
+                        img.classList.remove('animate');
+                    }, 500); // 500 milisegundos = 0.5 segundos (ajusta la duración según tu preferencia)
+                }
+            }
+
+            // Actualizar el estado de los botones Anterior/Siguiente
+            prevButton.disabled = index === 0;
+            nextButton.disabled = index === pages.length - 1;
+
+            // Actualizar el contador de páginas leídas (no contar la página de finalización hasta que se llegue)
+            if (index < pages.length - 1 && index >= 0 && pages[index].id !== 'completionPage' && !pages[index].classList.contains('visited')) {
+                pages[index].classList.add('visited');
+                pagesRead = document.querySelectorAll('.page.visited').length;
+            }
+        }
+
+        function nextPage() {
+            if (currentPageIndex < pages.length - 1) {
+                currentPageIndex++;
+                showPage(currentPageIndex);
+                // Añadir clase para animación hacia adelante
+                manualPagesContainer.classList.remove('reverse');
+                manualPagesContainer.classList.add('forward');
+
+                // Si llegamos a la página de finalización, calcular la duración
+                if (currentPageIndex === pages.length - 1) {
+                    endTime = new Date();
+                    const duration = Math.round((endTime - startTime) / 1000); // Duración en segundos
+                    const minutes = Math.floor(duration / 60);
+                    const seconds = duration % 60;
+                    manualDurationSpan.textContent = `${minutes} minutos y ${seconds} segundos`;
+                    pagesReadSpan.textContent = pagesRead;
+                }
+            }
+        }
+
+        function prevPage() {
+            if (currentPageIndex > 0) {
+                currentPageIndex--;
+                showPage(currentPageIndex);
+                // Añadir clase para animación hacia atrás
+                manualPagesContainer.classList.remove('forward');
+                manualPagesContainer.classList.add('reverse');
+            }
+        }
+
+        function restartManual() {
+            currentPageIndex = 0;
+            pagesRead = 0;
+            pages.forEach(page => page.classList.remove('visited'));
+            startTime = new Date();
+            showPage(currentPageIndex);
+        }
+
+        prevButton.addEventListener('click', prevPage);
+        nextButton.addEventListener('click', nextPage);
+        restartButton.addEventListener('click', restartManual);
+
+        // Inicializar al cargar la página
+        startTime = new Date();
+        showPage(currentPageIndex);
+    </script>
+</body>
+</html>

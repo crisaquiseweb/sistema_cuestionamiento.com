@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Red Social Local</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+    font-family: sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #007bff;
+}
+
+#user-list, #post-area, #feed {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+#user-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#user-list ul li {
+    margin-bottom: 5px;
+}
+
+#post-area textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#post-area button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+#post-area button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+#posts {
+    margin-top: 10px;
+}
+
+.post {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+}
+
+.post .author {
+    font-weight: bold;
+    color: #555;
+}
+
+.post .timestamp {
+    color: #777;
+    font-size: 0.8em;
+}
+
+#logout-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+#logout-btn:hover {
+    background-color: #c82333;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Red Social Local</h1>
+
+        <div id="user-list">
+            <h2>Usuarios Conectados:</h2>
+            <ul id="connected-users">
+                </ul>
+        </div>
+
+        <div id="post-area">
+            <h2>Publicar Mensaje</h2>
+            <form id="post-form">
+                <textarea id="message-input" placeholder="Escribe tu mensaje aquí"></textarea>
+                <button type="submit">Publicar</button>
+            </form>
+        </div>
+
+        <div id="feed">
+            <h2>Publicaciones Recientes:</h2>
+            <div id="posts">
+                </div>
+        </div>
+
+        <button id="logout-btn">Salir</button>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const userList = document.getElementById('connected-users');
+    const postForm = document.getElementById('post-form');
+    const messageInput = document.getElementById('message-input');
+    const postsDiv = document.getElementById('posts');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    function actualizarUsuarios() {
+        fetch('/api/usuarios_conectados')
+            .then(response => response.json())
+            .then(data => {
+                userList.innerHTML = '';
+                data.forEach(ip => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = ip;
+                    userList.appendChild(listItem);
+                });
+            });
+    }
+
+    function cargarPublicaciones() {
+        fetch('/api/obtener_publicaciones')
+            .then(response => response.json())
+            .then(data => {
+                postsDiv.innerHTML = '';
+                data.forEach(post => {
+                    const postDiv = document.createElement('div');
+                    postDiv.classList.add('post');
+                    postDiv.innerHTML = `<p><span class="author">${post.autor}:</span> ${post.mensaje}</p><span class="timestamp">${post.timestamp}</span>`;
+                    postsDiv.appendChild(postDiv);
+                });
+            });
+    }
+
+    postForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const mensaje = messageInput.value;
+        if (mensaje.trim()) {
+            const formData = new FormData();
+            formData.append('mensaje', mensaje);
+
+            fetch('/api/publicar', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (response.ok) {
+                    messageInput.value = '';
+                    cargarPublicaciones(); // Recargar las publicaciones después de publicar
+                } else {
+                    alert(data.error);
+                }
+            });
+        } else {
+            alert('Por favor, escribe un mensaje.');
+        }
+    });
+
+    logoutBtn.addEventListener('click', function() {
+        fetch('/api/logout')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+                // Podrías redirigir a una página de inicio de sesión si la tuvieras
+                actualizarUsuarios(); // Vuelve a actualizar la lista después de cerrar sesión
+            });
+    });
+
+    // Actualizar la lista de usuarios y cargar las publicaciones cada cierto tiempo
+    setInterval(actualizarUsuarios, 2000);
+    setInterval(cargarPublicaciones, 3000);
+
+    // Cargar la lista de usuarios y las publicaciones al cargar la página
+    actualizarUsuarios();
+    cargarPublicaciones();
+});
+    </script>
+</body>
+</html>

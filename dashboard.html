@@ -6,6 +6,7 @@
     <title>Panel de Control</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="icon/inicio.ico" type="image/x-icon" >
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         /* Estilos básicos para la lista desplegable y el modal */
@@ -180,6 +181,60 @@
             margin-left: 10px;
             cursor: pointer;
         }
+
+        /* Estilos para el nuevo menú desplegable */
+        #main-nav-list li {
+            position: relative; /* Para que el submenu se posicione correctamente */
+        }
+
+        #main-nav-list li > a { /* Style the top level link */
+            display: flex;
+            align-items: center;
+        }
+
+        #main-nav-list li ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            background-color:#1044a4 ;
+            font-family: system-ui;
+            min-width: 120px;
+            color: white;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            display: none; /* Oculto por defecto */
+        }
+
+        #main-nav-list li:hover > ul {
+            display: block; /* Mostrar el submenu al pasar el mouse sobre el li padre */
+
+        }
+
+        #main-nav-list li ul li a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        #main-nav-list li ul li a:hover {
+            background-color: #ddd;
+        }
+
+        .has-submenu::after {
+            content: '\f107'; /* Unicode para una flecha hacia abajo (Font Awesome) */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 0.8em;
+            margin-left: 5px;
+        }
+        #content-frame {
+            width: 100%; /* Asegura que el ancho del iframe sea adaptable */
+            border: 0;
+            margin-top: -7px; /* Mantiene el margen superior */
+        }
     </style>
 </head>
 <body>
@@ -188,9 +243,27 @@
             <ul id="main-nav-list">
                 <li><a href="pages/dashboard_inicio.html" target="content-frame">INICIO</a></li>
                 <li><a href="pages/cuestionamiento.html" target="content-frame">CUESTIONAMIENTO</a></li>
-              <!--  <li><a href="pages/consolidado.html" target="content-frame">CONSOLIDADO</a></li>-->
                 <li><a href="pages/generador_pdf.html" target="content-frame">GENERADOR PDF</a></li>
-              <!--  <li><a href="pages/usuarios_conectados.html" target="content-frame">USUARIOS</a></li>-->
+            <li>
+                    <a href="#" class="has-submenu">MANUAL RUC 20</a>
+                    <ul style="font-size:13px;">
+                        <li><a href="pages/reposicion_ruc.html" target="content-frame" style="margin-left: 18px;">REPOSICION CHIP</a></li>
+                        <li><a href="#">PORTABILIDAD</a></li>
+                        <li><a href="#">RENOVACION VEP</a></li>
+                        <li><a href="#">RENOVACION CONTADO</a></li>
+                        <li><a href="#">CAMBIO DE MERCADO RUC A DNI</a></li>
+                        <li><a href="#">CAMBIO DE MERCADO DNI A RUC</a></li>
+                        <li><a href="pages/generar_cu.html" target="content-frame">GENERAR CU</a></li>
+                        
+                    </ul>
+                </li>
+                <li><a href="pages/red.html" target="content-frame">RED LOCAL</a></li>
+
+
+
+
+
+
 
             </ul>
         </nav>
@@ -201,7 +274,7 @@
                     <span id="username-display"></span>
                     <i class="fas fa-cog gear-icon"></i>
                 </div>
-                <ul class="user-menu" id="user-menu" style="margin-top: 15px;">
+                <ul class="user-menu" id="user-menu" >
                     <li><a href="#" id="open-config-modal">Administrador</a></li>
                     <li><a href="#" id="logout-link">Cerrar Sesión</a></li>
                 </ul>
